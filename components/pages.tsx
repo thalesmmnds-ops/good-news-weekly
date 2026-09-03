@@ -38,7 +38,7 @@ export function StoryPage({
       {story.image ? (
         <figure className={styles.plate}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={story.image.src} alt={story.image.alt} loading="lazy" />
+          <img src={story.image.src} alt={story.image.alt} />
           <figcaption className={styles.plateCap}>
             {story.image.caption ? <span>{story.image.caption} </span> : null}
             <span className={styles.plateCredit}>

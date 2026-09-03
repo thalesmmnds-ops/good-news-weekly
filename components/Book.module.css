@@ -1,22 +1,20 @@
 .wrap {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(16px, 3.4vh, 34px);
   min-height: 100dvh;
-  padding: clamp(20px, 5vh, 56px) 16px clamp(18px, 4vh, 40px);
+  padding: clamp(14px, 3vh, 30px) clamp(56px, 6vw, 96px);
 }
 
 .scene {
-  --page-w: min(46vw, 460px, calc((100dvh - 220px) / 1.42));
+  --page-w: min(45vw, 500px, calc((100dvh - 128px) / 1.42));
   --page-h: calc(var(--page-w) * 1.42);
   --spread-w: calc(var(--page-w) * 2);
 
   position: relative;
   width: var(--spread-w);
   height: var(--page-h);
-  perspective: 3000px;
+  perspective: 3200px;
   perspective-origin: 50% 34%;
 }
 
@@ -175,104 +173,49 @@
   );
 }
 
-/* ── controls ────────────────────────────────────────────────────────── */
-.arrows {
+/* ── controls: a chevron flanking each side of the book ───────────────── */
+.arrow {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 15%;
-  z-index: 40;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.arrowPrev {
-  left: -12%;
-  cursor: w-resize;
-}
-.arrowNext {
-  right: -12%;
-  cursor: e-resize;
-}
-.arrows:disabled {
-  cursor: default;
-}
-
-.nav {
+  top: 50%;
+  width: clamp(40px, 3.4vw, 50px);
+  height: clamp(40px, 3.4vw, 50px);
+  transform: translateY(-50%);
   display: flex;
-  align-items: center;
-  gap: 18px;
-  color: var(--paper);
-}
-.navBtn {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(243, 236, 223, 0.28);
+  z-index: 40;
+  padding: 0 0 0.1em;
+  border: 1px solid rgba(243, 236, 223, 0.3);
   border-radius: 50%;
-  background: rgba(243, 236, 223, 0.06);
-  color: inherit;
+  background: rgba(243, 236, 223, 0.08);
+  color: rgba(243, 236, 223, 0.92);
+  font-size: 1.3rem;
+  line-height: 1;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition: background 0.16s, border-color 0.16s, opacity 0.16s;
 }
-.navBtn:hover:not(:disabled) {
-  background: rgba(243, 236, 223, 0.16);
-  border-color: rgba(243, 236, 223, 0.5);
+.arrow:hover:not(:disabled) {
+  background: rgba(243, 236, 223, 0.18);
+  border-color: rgba(243, 236, 223, 0.55);
 }
-.navBtn:disabled {
-  opacity: 0.3;
+.arrow:disabled {
+  opacity: 0.2;
   cursor: default;
 }
-.readout {
-  min-width: 9ch;
-  text-align: center;
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
-  color: rgba(243, 236, 223, 0.82);
+.arrowPrev {
+  left: calc(-1 * clamp(46px, 5vw, 70px));
 }
-
-.ticks {
-  display: flex;
-  gap: 6px;
-}
-.tick {
-  width: 9px;
-  height: 9px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(243, 236, 223, 0.24);
-  cursor: pointer;
-  transition: background 0.16s, transform 0.16s;
-}
-.tick:hover {
-  background: rgba(243, 236, 223, 0.5);
-}
-.tickOn {
-  background: var(--paper);
-  transform: scale(1.15);
-}
-
-.hint {
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(243, 236, 223, 0.5);
-  transition: opacity 0.4s;
-}
-.hintGone {
-  opacity: 0;
+.arrowNext {
+  right: calc(-1 * clamp(46px, 5vw, 70px));
 }
 
 @media (max-width: 720px) {
+  .wrap {
+    padding: 12px clamp(44px, 12vw, 60px);
+  }
   .scene {
-    --page-w: min(47vw, calc((100dvh - 200px) / 1.42 / 1.4));
+    --page-w: min(47vw, calc((100dvh - 70px) / 1.42 / 1.4));
   }
   .book {
     transform: rotateX(5deg);

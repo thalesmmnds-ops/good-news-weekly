@@ -56,9 +56,9 @@
     {
       "rank": 4,
       "category": "discovery",
-      "headline": "The James Webb telescope returned the deepest infrared image of the universe yet",
+      "headline": "Webb's deepest infrared image of the universe yet",
       "dek": "A patch of sky the width of a grain of sand, and thousands of galaxies crowded into it.",
-      "summary": "NASA's first full-colour image from the James Webb Space Telescope: a deep field around galaxy cluster SMACS 0723, whose mass magnifies the light of galaxies far behind it. Webb reached in about twelve hours a depth that took Hubble weeks, and now routinely sees galaxies from the first few hundred million years after the Big Bang.",
+      "summary": "NASA's first full-colour frame from the James Webb Space Telescope: a deep field where a galaxy cluster's gravity magnifies far older galaxies behind it, reaching in hours a depth that took Hubble weeks.",
       "image": {
         "src": "/plates/jwst-deep-field.jpg",
         "alt": "Webb's first deep field: a dense scattering of galaxies of every shape and colour against black, several arcs of light bent by a foreground cluster.",

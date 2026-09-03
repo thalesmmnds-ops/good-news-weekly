@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type PointerEvent as ReactPointerEvent,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { isSettled, stepSpring, type Spring } from "@/lib/pageCurl";
 
@@ -40,7 +33,6 @@ export function Book({
     Math.min(Math.floor(Math.max(initialPage, 0) / 2), spreadCount - 1),
   );
   const [turn, setTurnState] = useState<Turn>(null);
-  const [hintGone, setHintGone] = useState(false);
   const [reduced, setReduced] = useState(false);
 
   const bookRef = useRef<HTMLDivElement>(null);
@@ -81,7 +73,6 @@ export function Book({
 
   const settle = useCallback(
     (to: number) => {
-      setHintGone(true);
       setSpread(to);
       syncUrl(to);
     },
@@ -221,14 +212,6 @@ export function Book({
     };
   }, [setTurn, spread]);
 
-  const readout = useMemo(() => {
-    const labels = [left?.label, right?.label].filter(Boolean) as string[];
-    if (labels.includes("Cover")) return "Cover";
-    if (labels.includes("Colophon"))
-      return labels.length > 1 ? `${labels[0]} · Colophon` : "Colophon";
-    return labels.length === 2 ? `Stories ${labels[0]}–${labels[1]}` : `Story ${labels[0]}`;
-  }, [left, right]);
-
   const s = turn ? turn.s : spread;
 
   return (
@@ -269,38 +252,16 @@ export function Book({
 
         <button
           type="button"
-          className={`${styles.arrows} ${styles.arrowPrev}`}
-          aria-label="Previous pages"
-          disabled={spread <= 0}
-          onPointerDown={(e: ReactPointerEvent) => {
-            if (e.button === 0) step("prev");
-          }}
-        />
-        <button
-          type="button"
-          className={`${styles.arrows} ${styles.arrowNext}`}
-          aria-label="Next pages"
-          disabled={spread >= spreadCount - 1}
-          onPointerDown={(e: ReactPointerEvent) => {
-            if (e.button === 0) step("next");
-          }}
-        />
-      </div>
-
-      <div className={styles.nav}>
-        <button
-          type="button"
-          className={styles.navBtn}
+          className={`${styles.arrow} ${styles.arrowPrev}`}
           aria-label="Previous pages"
           disabled={spread <= 0}
           onClick={() => step("prev")}
         >
           &lsaquo;
         </button>
-        <span className={styles.readout}>{readout}</span>
         <button
           type="button"
-          className={styles.navBtn}
+          className={`${styles.arrow} ${styles.arrowNext}`}
           aria-label="Next pages"
           disabled={spread >= spreadCount - 1}
           onClick={() => step("next")}
@@ -308,23 +269,6 @@ export function Book({
           &rsaquo;
         </button>
       </div>
-
-      <div className={styles.ticks}>
-        {Array.from({ length: spreadCount }, (_, i) => (
-          <button
-            type="button"
-            key={i}
-            className={`${styles.tick}${i === spread ? ` ${styles.tickOn}` : ""}`}
-            aria-label={`Spread ${i + 1} of ${spreadCount}`}
-            aria-current={i === spread ? "true" : undefined}
-            onClick={() => go(i)}
-          />
-        ))}
-      </div>
-
-      <p className={`${styles.hint}${hintGone ? ` ${styles.hintGone}` : ""}`}>
-        Use the arrows, &larr; &rarr;, or the dots
-      </p>
     </div>
   );
 }
