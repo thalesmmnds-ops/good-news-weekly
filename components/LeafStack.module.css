@@ -46,6 +46,7 @@
   transform-origin: left center;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transition: none;
   border-radius: 2px 4px 4px 2px;
   background:
     linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0) 3%),
@@ -55,28 +56,6 @@
     0 10px 26px rgba(20, 14, 4, 0.16);
   overflow: hidden;
   will-change: transform;
-}
-
-.turning {
-  z-index: 999;
-  box-shadow:
-    0 1px 1px rgba(20, 14, 4, 0.14),
-    0 20px 46px rgba(20, 14, 4, 0.26);
-}
-
-/* the page's own bend, brightest when it stands on edge mid-turn */
-.bend {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 250, 238, 0.5) 0%,
-    rgba(255, 250, 238, 0) 22%,
-    rgba(40, 28, 10, 0.12) 62%,
-    rgba(40, 28, 10, 0.34) 100%
-  );
 }
 
 .zone {
