@@ -33,19 +33,19 @@
 
 /* the inner (spine) edge of each face curves toward the binding */
 .leafNext .front {
-  border-radius: 0 2px 2px 0;
+  border-radius: 0;
   box-shadow: inset 30px 0 40px -34px rgba(40, 28, 10, 0.5);
 }
 .leafNext .back {
-  border-radius: 2px 0 0 2px;
+  border-radius: 0;
   box-shadow: inset -30px 0 40px -34px rgba(40, 28, 10, 0.5);
 }
 .leafPrev .front {
-  border-radius: 2px 0 0 2px;
+  border-radius: 0;
   box-shadow: inset -30px 0 40px -34px rgba(40, 28, 10, 0.5);
 }
 .leafPrev .back {
-  border-radius: 0 2px 2px 0;
+  border-radius: 0;
   box-shadow: inset 30px 0 40px -34px rgba(40, 28, 10, 0.5);
 }
 
