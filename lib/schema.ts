@@ -40,6 +40,29 @@ export const sourceSchema = z.object({
   doi: z.string().min(1).optional(),
 });
 
+/**
+ * A freely-licensed image for the story's plate. Only public-domain and
+ * attribution-only licences are allowed in — never the news outlet's own
+ * photo. The pipeline fills this from Openverse / NASA / Wikimedia Commons
+ * and always records where it came from.
+ */
+export const imageSchema = z.object({
+  /** Local path under /public (the pipeline downloads and stores it). */
+  src: z.string().min(1),
+  /** Describes the picture, for screen readers. */
+  alt: z.string().min(1),
+  /** Optional one-line caption printed under the plate. */
+  caption: z.string().max(160).optional(),
+  /** Who made it, e.g. "NASA/STScI" or a photographer's name. */
+  credit: z.string().min(1),
+  creditUrl: z.string().url().optional(),
+  /** Short licence label, e.g. "Public domain" or "CC BY 4.0". */
+  license: z.string().min(1),
+  licenseUrl: z.string().url().optional(),
+});
+
+export type StoryImage = z.infer<typeof imageSchema>;
+
 export const storySchema = z.object({
   /** 1–10, unique within an issue, drives running order. */
   rank: z.number().int().min(1).max(10),
@@ -48,10 +71,12 @@ export const storySchema = z.object({
   headline: z.string().min(1).max(140),
   /** One-sentence standfirst. */
   dek: z.string().min(1).max(240),
-  /** 40–60 words of original prose. Not an excerpt. */
+  /** ~40–55 words of original prose; ~30–40 when the story carries a plate. */
   summary: z.string().min(1),
   /** Optional single line: why this matters beyond the week. */
   whyItMatters: z.string().max(280).optional(),
+  /** Optional plate, set between the standfirst and the body. */
+  image: imageSchema.optional(),
   source: sourceSchema,
 });
 

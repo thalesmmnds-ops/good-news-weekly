@@ -25,8 +25,15 @@
       "category": "health",
       "headline": "The first medicine that edits a patient's own genes was approved for sickle cell disease",
       "dek": "Casgevy uses CRISPR to switch a protective form of hemoglobin back on.",
-      "summary": "Regulators in the United Kingdom and the United States cleared Casgevy, a one-time treatment that edits a patient's own blood stem cells with CRISPR so they resume making fetal hemoglobin. In trials, the large majority of people with severe sickle cell disease went at least a year without the painful vaso-occlusive crises that define the illness.",
-      "whyItMatters": "It is the first CRISPR-based therapy to reach patients, and a template for other inherited diseases.",
+      "summary": "The UK and US cleared Casgevy, a one-time CRISPR treatment that reprograms a patient's own blood stem cells to make fetal hemoglobin. In trials, most people with severe sickle cell disease then went a year or more without a pain crisis.",
+      "image": {
+        "src": "/plates/red-blood-cells.jpg",
+        "alt": "A colour-enhanced electron micrograph of a red blood cell, a platelet, and a white blood cell.",
+        "caption": "Human blood cells under an electron microscope.",
+        "credit": "Electron Microscopy Facility, National Cancer Institute",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:Red_White_Blood_cells.jpg",
+        "license": "Public domain"
+      },
       "source": {
         "name": "U.S. Food and Drug Administration",
         "url": "https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease",
@@ -50,9 +57,16 @@
       "rank": 4,
       "category": "discovery",
       "headline": "The James Webb telescope returned the deepest infrared image of the universe yet",
-      "dek": "Thousands of galaxies, some more than 13 billion years old, in a patch of sky the width of a grain of sand held at arm's length.",
-      "summary": "NASA released the first full-color science image from the James Webb Space Telescope: a deep field around galaxy cluster SMACS 0723, whose mass bends and magnifies the light of far more distant galaxies behind it. Webb gathered the exposure in roughly twelve hours, a depth that took the Hubble telescope weeks to reach.",
-      "whyItMatters": "Webb now routinely observes galaxies as they formed in the first few hundred million years after the Big Bang.",
+      "dek": "A patch of sky the width of a grain of sand, and thousands of galaxies crowded into it.",
+      "summary": "NASA's first full-colour image from the James Webb Space Telescope: a deep field around galaxy cluster SMACS 0723, whose mass magnifies the light of galaxies far behind it. Webb reached in about twelve hours a depth that took Hubble weeks, and now routinely sees galaxies from the first few hundred million years after the Big Bang.",
+      "image": {
+        "src": "/plates/jwst-deep-field.jpg",
+        "alt": "Webb's first deep field: a dense scattering of galaxies of every shape and colour against black, several arcs of light bent by a foreground cluster.",
+        "caption": "Webb's First Deep Field — galaxy cluster SMACS 0723.",
+        "credit": "NASA, ESA, CSA, STScI",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:Webb%27s_First_Deep_Field.jpg",
+        "license": "Public domain"
+      },
       "source": {
         "name": "NASA",
         "url": "https://www.nasa.gov/image-article/nasas-webb-delivers-deepest-infrared-image-of-universe-yet/",
@@ -103,8 +117,15 @@
       "category": "conservation",
       "headline": "Mosquitoes carrying a common bacterium cut dengue cases by 77% in a city trial",
       "dek": "A randomized study in Yogyakarta released Aedes aegypti infected with Wolbachia.",
-      "summary": "Researchers with the World Mosquito Program released mosquitoes carrying Wolbachia, a bacterium that stops the dengue virus replicating inside the insect, across parts of Yogyakarta, Indonesia. Neighborhoods that received the mosquitoes recorded 77% fewer dengue cases and 86% fewer hospitalizations than untreated areas.",
-      "whyItMatters": "The released mosquitoes establish themselves permanently, so protection continues without repeated spraying.",
+      "summary": "The World Mosquito Program released Aedes aegypti carrying Wolbachia, a bacterium that blocks the dengue virus from replicating inside the insect, across parts of Yogyakarta, Indonesia. Treated neighbourhoods recorded 77% fewer dengue cases and 86% fewer hospitalisations, and the mosquitoes stay established, so protection continues on its own.",
+      "image": {
+        "src": "/plates/mosquito.jpg",
+        "alt": "Close-up of an Aedes aegypti mosquito feeding on human skin, its abdomen reddened with blood.",
+        "caption": "Aedes aegypti, the mosquito that carries dengue.",
+        "credit": "James Gathany, CDC",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:Aedes_aegypti_bloodfeeding_CDC_Gathany.jpg",
+        "license": "Public domain"
+      },
       "source": {
         "name": "The New England Journal of Medicine",
         "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2030243",

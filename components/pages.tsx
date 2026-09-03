@@ -35,6 +35,32 @@ export function StoryPage({
 
       <p className={styles.dek}>{story.dek}</p>
 
+      {story.image ? (
+        <figure className={styles.plate}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={story.image.src} alt={story.image.alt} loading="lazy" />
+          <figcaption className={styles.plateCap}>
+            {story.image.caption ? <span>{story.image.caption} </span> : null}
+            <span className={styles.plateCredit}>
+              {story.image.creditUrl ? (
+                <a
+                  className={styles.sourceLink}
+                  href={story.image.creditUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {story.image.credit}
+                </a>
+              ) : (
+                story.image.credit
+              )}
+              {" · "}
+              {story.image.license}
+            </span>
+          </figcaption>
+        </figure>
+      ) : null}
+
       <div className={styles.body}>
         <p style={{ margin: 0 }}>{story.summary}</p>
         {story.whyItMatters ? (

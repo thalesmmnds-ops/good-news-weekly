@@ -53,6 +53,33 @@
   border-top: 1px solid var(--hairline);
 }
 
+/* the plate: a picture cut into the column, old-newspaper style */
+.plate {
+  margin: calc(var(--page-w) * 0.04) 0 0;
+}
+.plate img {
+  display: block;
+  width: 100%;
+  height: calc(var(--page-w) * 0.285);
+  object-fit: cover;
+  border: 1px solid var(--hairline-strong);
+  /* pull disparate photos toward one ink-on-paper tone */
+  filter: grayscale(0.22) sepia(0.14) contrast(1.03) saturate(0.88) brightness(1.02);
+}
+.plateCap {
+  margin-top: 0.4em;
+  font-size: max(9px, calc(var(--page-w) * 0.0245));
+  line-height: 1.38;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+.plateCredit {
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.88em;
+}
+
 .body {
   flex: 1;
   min-height: 0;
