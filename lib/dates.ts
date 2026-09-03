@@ -26,6 +26,21 @@ export function formatMonthDay(iso: string): string {
   return MONTH_DAY.format(new Date(`${iso}T00:00:00Z`));
 }
 
+const DAY = 86_400_000;
+const toISO = (ms: number) => new Date(ms).toISOString().slice(0, 10);
+
+/**
+ * The Edition ships on a Thursday and covers the previous complete week.
+ * Given a publish date (defaults to today), returns the Monday of that
+ * covered week as an ISO date — the value for an issue's `weekOf`.
+ */
+export function coveredWeekMonday(publishOn: Date = new Date()): string {
+  const t = Date.parse(`${publishOn.toISOString().slice(0, 10)}T00:00:00Z`);
+  const dow = new Date(t).getUTCDay(); // 0 Sun … 6 Sat
+  const thisMonday = t - ((dow + 6) % 7) * DAY;
+  return toISO(thisMonday - 7 * DAY);
+}
+
 const ROMAN: Array<[number, string]> = [
   [1000, "M"],
   [900, "CM"],

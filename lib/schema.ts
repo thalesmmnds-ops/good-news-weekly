@@ -114,13 +114,30 @@ export const issueSchema = z
       });
     }
 
-    // A weekly issue carries only that week's news. Each source article must
-    // have appeared from a few days before the covered Monday to ten days
-    // after it (room for embargoed studies picked up slightly late).
+    // The Edition comes out on a Thursday and covers the previous complete
+    // week (Mon–Sun). So the issue is published a few days after that week
+    // ends, and every source article appeared within it — with a little slack
+    // for an embargoed study whose write-up lands slightly early or late.
     if (!issue.sampler) {
+      const DAY = 86_400_000;
       const monday = Date.parse(`${issue.weekOf}T00:00:00Z`);
-      const from = monday - 3 * 86_400_000;
-      const to = monday + 10 * 86_400_000;
+      const published = Date.parse(`${issue.published}T00:00:00Z`);
+
+      if (published < monday + 6 * DAY) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `published ${issue.published} is before the week of ${issue.weekOf} has ended`,
+        });
+      }
+      if (published > monday + 24 * DAY) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `published ${issue.published} is more than three weeks after the week it covers`,
+        });
+      }
+
+      const from = monday - 2 * DAY;
+      const to = monday + 9 * DAY;
       for (const story of issue.stories) {
         const d = Date.parse(`${story.source.date}T00:00:00Z`);
         if (d < from || d > to) {

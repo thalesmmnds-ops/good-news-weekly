@@ -86,10 +86,15 @@ Each `content/issues/<year>-W<week>.json`:
 }
 ```
 
-`npm run build` fails loudly if an issue file breaks the schema. It's a
-**weekly**: every story's `source.date` must land from 3 days before the
-covered Monday to 10 days after it. A `sampler` issue is exempt — that's what
-the launch demo uses.
+### Cadence
+
+The Edition ships **every Thursday** and covers the **previous complete week**
+(Monday–Sunday). So `weekOf` is that Monday, `published` is the following
+Thursday, and `npm run build` enforces it: `published` must fall after the
+covered week has ended, and every story's `source.date` must land within a day
+or two of that Mon–Sun window. A `sampler` issue is exempt — that's what the
+launch demo uses. `coveredWeekMonday()` in `lib/dates.ts` derives `weekOf` from
+the publish date for the pipeline.
 
 ## Roadmap
 
@@ -97,10 +102,11 @@ the launch demo uses.
 - [x] **M2** The page-turn — spring, drag, keyboard, reduced-motion, deep links
 - [x] **M3** Schema, loader, archive, about, RSS
 - [ ] **M3.1** Per-issue Open Graph images (`opengraph-image.tsx`)
-- [ ] **M4** Weekly pipeline — `pipeline/`: pull the last 7 days from a fixed set
-      of science/conservation feeds, LLM filters the blocklist + ranks + drafts
-      (+ finds a freely-licensed plate per story), writes `*.draft.json` +
-      `REVIEW.md`, GitHub Action opens a PR
+- [ ] **M4** Weekly pipeline — `pipeline/`, run by a **Thursday** GitHub Action:
+      take `weekOf = coveredWeekMonday()`, pull that Mon–Sun window from a fixed
+      set of science/conservation feeds, LLM filters the blocklist + ranks +
+      drafts (+ finds a freely-licensed plate per story), writes `*.draft.json` +
+      `REVIEW.md`, opens a PR
 - [ ] **M5** Polish — snapshot-based page curl, zoom/loupe, analytics
 
 ## Editorial policy
