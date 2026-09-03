@@ -160,12 +160,21 @@
   color: var(--ink-soft);
   margin: 0.6em 0 0;
 }
+.coverTagline {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: max(15px, calc(var(--page-w) * 0.048));
+  line-height: 1.32;
+  color: var(--ink);
+  max-width: 18ch;
+  margin: 1.5em 0 0;
+}
 .coverNote {
   font-size: max(11px, calc(var(--page-w) * 0.033));
-  line-height: 1.62;
+  line-height: 1.64;
   color: var(--ink-soft);
-  max-width: 30ch;
-  margin: 1.4em 0 0;
+  max-width: 32ch;
+  margin: 1.2em 0 0;
 }
 
 /* ── colophon ────────────────────────────────────────────────────────── */

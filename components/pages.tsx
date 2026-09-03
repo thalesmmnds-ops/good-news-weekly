@@ -104,9 +104,14 @@ export function CoverPage({ issue, side }: { issue: Issue; side: Side }) {
         Vol.&nbsp;{toRoman(issue.volume)} &nbsp;&middot;&nbsp; No.&nbsp;{issue.number}{" "}
         &nbsp;&middot;&nbsp; {formatWeekOf(issue.weekOf)}
       </p>
-      {issue.editorsNote ? (
-        <p className={styles.coverNote}>{issue.editorsNote}</p>
-      ) : null}
+      <p className={styles.coverTagline}>
+        Good things you might have missed this week
+      </p>
+      <p className={styles.coverNote}>
+        A little collection of the good happening around the world. No wars, no
+        politics, no crime &mdash; just people, ideas, animals, discoveries, and
+        small reasons to feel hopeful.
+      </p>
     </div>
   );
 }
