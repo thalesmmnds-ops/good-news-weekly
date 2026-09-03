@@ -16,7 +16,7 @@ const PROGRESS_SPAN = 0.82; // fraction of the frame width that spans a full tur
 
 type Dir = "next" | "prev";
 
-type Anim = { dir: Dir; leaf: number } | null;
+type Anim = { dir: Dir; leaf: number; from: number } | null;
 
 export function LeafStack({
   leaves,
@@ -147,9 +147,10 @@ export function LeafStack({
       if (dir === "prev" && index <= 0) return false;
       setHintGone(true);
       const leaf = dir === "next" ? index : index - 1;
-      turnRef.current = dir === "next" ? 0 : 1;
+      const from = dir === "next" ? 0 : 1;
+      turnRef.current = from;
       velRef.current = 0;
-      setAnim({ dir, leaf });
+      setAnim({ dir, leaf, from });
       return true;
     },
     [anim, index, last],
@@ -183,51 +184,50 @@ export function LeafStack({
   );
 
   // ------------------------------------------------------------- drag
-  const onZonePointerDown = (dir: Dir) => (e: ReactPointerEvent<HTMLButtonElement>) => {
-    if (e.button !== 0) return;
-    if (!begin(dir)) return;
-    const leaf = dir === "next" ? index : index - 1;
-    const w = e.currentTarget.parentElement?.clientWidth ?? window.innerWidth;
-    e.currentTarget.setPointerCapture(e.pointerId);
-    dragRef.current = {
-      dir,
-      leaf,
-      x0: e.clientX,
-      w,
-      moved: 0,
-      t0: performance.now(),
-      last: turnRef.current,
-    };
-  };
+  const onZonePointerDown = useCallback(
+    (e: ReactPointerEvent<HTMLButtonElement>) => {
+      if (e.button !== 0) return;
+      const dir = e.currentTarget.dataset.dir as Dir;
+      if (!begin(dir)) return;
+      const leaf = dir === "next" ? index : index - 1;
+      const w = e.currentTarget.parentElement?.clientWidth ?? window.innerWidth;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      dragRef.current = { dir, leaf, x0: e.clientX, w, moved: 0, t0: performance.now(), last: 0 };
+    },
+    [begin, index],
+  );
 
-  const onZonePointerMove = (e: ReactPointerEvent<HTMLButtonElement>) => {
-    const d = dragRef.current;
-    if (!d) return;
-    const dx = e.clientX - d.x0;
-    d.moved = Math.max(d.moved, Math.abs(dx));
-    const travel = dx / (d.w * PROGRESS_SPAN);
-    const t = d.dir === "next" ? clamp01(-travel) : clamp01(1 - travel);
-    turnRef.current = t;
-    paint(d.leaf, t);
-  };
+  const onZonePointerMove = useCallback(
+    (e: ReactPointerEvent<HTMLButtonElement>) => {
+      const d = dragRef.current;
+      if (!d) return;
+      const dx = e.clientX - d.x0;
+      d.moved = Math.max(d.moved, Math.abs(dx));
+      const travel = dx / (d.w * PROGRESS_SPAN);
+      const t = d.dir === "next" ? clamp01(-travel) : clamp01(1 - travel);
+      turnRef.current = t;
+      paint(d.leaf, t);
+    },
+    [paint],
+  );
 
-  const endDrag = (e: ReactPointerEvent<HTMLButtonElement>) => {
-    const d = dragRef.current;
-    if (!d) return;
-    dragRef.current = null;
-    try {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    } catch {
-      /* capture may already be gone */
-    }
-
-    const tap = d.moved < 6;
-    const t = turnRef.current;
-    const commit =
-      tap ||
-      (d.dir === "next" ? t > 0.38 : t < 0.62);
-    settle(d.dir, d.leaf, commit);
-  };
+  const endDrag = useCallback(
+    (e: ReactPointerEvent<HTMLButtonElement>) => {
+      const d = dragRef.current;
+      if (!d) return;
+      dragRef.current = null;
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {
+        /* capture may already be gone */
+      }
+      const tap = d.moved < 6;
+      const t = turnRef.current;
+      const commit = tap || (d.dir === "next" ? t > 0.38 : t < 0.62);
+      settle(d.dir, d.leaf, commit);
+    },
+    [settle],
+  );
 
   // --------------------------------------------------------- keyboard
   useEffect(() => {
@@ -273,10 +273,10 @@ export function LeafStack({
   }, [index, last, storyCount]);
 
   const leafTransform = (i: number): string => {
-    // The turning leaf gets its first frame straight from the live turn value
-    // (a ref, so reading it here is deliberate) and is imperative thereafter.
+    // The turning leaf starts at its recorded `from` angle; the spring and the
+    // drag handler take it from there imperatively.
     if (anim && i === anim.leaf) {
-      return `rotateY(${(-turnRef.current * TURN_DEG).toFixed(2)}deg)`;
+      return `rotateY(${(-anim.from * TURN_DEG).toFixed(2)}deg)`;
     }
     if (i < index) return `rotateY(${-TURN_DEG}deg)`;
     return "rotateY(0deg)";
@@ -315,20 +315,22 @@ export function LeafStack({
 
         <button
           type="button"
+          data-dir="prev"
           className={`${styles.zone} ${styles.zonePrev}`}
           aria-label="Previous page"
           disabled={index <= 0}
-          onPointerDown={onZonePointerDown("prev")}
+          onPointerDown={onZonePointerDown}
           onPointerMove={onZonePointerMove}
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
         />
         <button
           type="button"
+          data-dir="next"
           className={`${styles.zone} ${styles.zoneNext}`}
           aria-label="Next page"
           disabled={index >= last}
-          onPointerDown={onZonePointerDown("next")}
+          onPointerDown={onZonePointerDown}
           onPointerMove={onZonePointerMove}
           onPointerUp={endDrag}
           onPointerCancel={endDrag}

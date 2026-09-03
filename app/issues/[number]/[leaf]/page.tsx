@@ -9,7 +9,6 @@ import {
   orderedStories,
 } from "@/lib/issues";
 import { CATEGORY_LABELS } from "@/lib/schema";
-import { formatWeekOf } from "@/lib/dates";
 
 export const dynamicParams = false;
 
