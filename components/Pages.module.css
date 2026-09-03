@@ -1,0 +1,203 @@
+/* Page-content type scales with the page itself (--page-w is set on .scene). */
+
+.inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--page-w) * 0.085) calc(var(--page-w) * 0.082);
+  overflow: hidden;
+}
+
+/* the edge by the spine gets extra room so text clears the fold */
+.inner.spineLeft {
+  padding-left: calc(var(--page-w) * 0.135);
+}
+.inner.spineRight {
+  padding-right: calc(var(--page-w) * 0.135);
+}
+
+/* ── story ───────────────────────────────────────────────────────────── */
+.rank {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: calc(var(--page-w) * 0.135);
+  line-height: 0.78;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.kicker {
+  margin-top: 0.4em;
+}
+
+.headline {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: max(17px, calc(var(--page-w) * 0.053));
+  line-height: 1.14;
+  letter-spacing: -0.006em;
+  margin: 0.4em 0 0;
+  text-wrap: balance;
+}
+
+.dek {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: max(13px, calc(var(--page-w) * 0.038));
+  line-height: 1.38;
+  color: var(--ink-soft);
+  margin: 0.72em 0 0;
+  padding-top: 0.68em;
+  border-top: 1px solid var(--hairline);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  margin: 0.7em 0 0;
+  font-size: max(12.5px, calc(var(--page-w) * 0.0345));
+  line-height: 1.54;
+}
+
+.why {
+  display: block;
+  margin-top: 0.85em;
+  padding-left: 0.9em;
+  border-left: 2px solid var(--hairline-strong);
+  font-size: 0.85em;
+  line-height: 1.46;
+  color: var(--ink-soft);
+}
+.why b {
+  display: block;
+  font: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.82em;
+  color: var(--ink-faint);
+  margin-bottom: 0.3em;
+}
+
+.foot {
+  margin-top: calc(var(--page-w) * 0.05);
+  padding-top: 0.85em;
+  border-top: 1px solid var(--hairline);
+  font-size: max(11px, calc(var(--page-w) * 0.03));
+  color: var(--ink-faint);
+}
+.sourceLink {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--hairline-strong);
+  text-underline-offset: 3px;
+}
+.sourceLink:hover {
+  text-decoration-color: var(--ink);
+}
+.folio {
+  display: block;
+  margin-top: 0.6em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── cover ───────────────────────────────────────────────────────────── */
+.cover {
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+.coverRule {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--hairline-strong);
+  margin: 0;
+}
+.coverMark {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: max(22px, calc(var(--page-w) * 0.088));
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  margin: 0.5em 0 0.32em;
+}
+.coverMark em {
+  font-style: italic;
+  font-weight: 500;
+}
+.coverMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  color: var(--ink-soft);
+  padding-top: 0.9em;
+}
+.coverTagline {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: max(15px, calc(var(--page-w) * 0.046));
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0;
+  max-width: 20ch;
+}
+.coverCats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: center;
+}
+.coverNote {
+  font-size: max(11px, calc(var(--page-w) * 0.032));
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ── colophon ────────────────────────────────────────────────────────── */
+.colTitle {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: max(20px, calc(var(--page-w) * 0.065));
+  line-height: 1.1;
+  margin: 0 0 0.7em;
+}
+.pledge {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: max(15px, calc(var(--page-w) * 0.044));
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0 0 0.9em;
+}
+.colBody {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  font-size: max(12px, calc(var(--page-w) * 0.034));
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.colBody p {
+  margin: 0 0 0.85em;
+}
+.colBody strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.colBody a {
+  color: var(--ink);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--hairline-strong);
+}
+
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.66rem;
+  font-weight: 500;
+}

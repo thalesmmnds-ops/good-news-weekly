@@ -56,5 +56,5 @@ export default async function LeafPage({
     notFound();
   }
 
-  return <Edition issue={issue} initialLeaf={index} />;
+  return <Edition issue={issue} initialPage={index} />;
 }

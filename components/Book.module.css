@@ -1,0 +1,258 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 3.4vh, 34px);
+  min-height: 100dvh;
+  padding: clamp(20px, 5vh, 56px) 16px clamp(18px, 4vh, 40px);
+}
+
+.scene {
+  --page-w: min(46vw, 460px, calc((100dvh - 220px) / 1.42));
+  --page-h: calc(var(--page-w) * 1.42);
+  --spread-w: calc(var(--page-w) * 2);
+
+  position: relative;
+  width: var(--spread-w);
+  height: var(--page-h);
+  perspective: 3000px;
+  perspective-origin: 50% 34%;
+}
+
+/* one flat tilt — no nested 3D — so the book reads as an object on a desk */
+.book {
+  position: absolute;
+  inset: 0;
+  transform: rotateX(var(--lean-x, 11deg)) rotateY(var(--lean-y, 0deg)) rotateZ(-0.5deg);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* hardcover boards, behind and a touch larger than the paper */
+.book::after {
+  content: "";
+  position: absolute;
+  inset: -13px -17px -22px -17px;
+  z-index: -3;
+  border-radius: 2px 11px 11px 2px;
+  background: linear-gradient(158deg, #322b23 0%, #221d17 58%, #191510 100%);
+  box-shadow: 0 44px 84px -22px rgba(20, 14, 4, 0.6);
+}
+
+/* the block of leaves between the cover and the open spread */
+.book::before {
+  content: "";
+  position: absolute;
+  inset: -1px -8px -12px -8px;
+  z-index: -2;
+  border-radius: 1px 6px 6px 1px;
+  background: linear-gradient(180deg, #efe7d3 0%, #e2d7bb 100%);
+  box-shadow:
+    inset 0 -1px 0 rgba(58, 44, 26, 0.28),
+    inset 2px 0 1px rgba(58, 44, 26, 0.12),
+    inset -2px 0 1px rgba(58, 44, 26, 0.12);
+}
+
+/* fore-edges: the stacked page ends you see along the outer sides */
+.fore {
+  position: absolute;
+  top: 1.5%;
+  bottom: 1.5%;
+  width: 8px;
+  z-index: -1;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(58, 44, 26, 0.2) 0 1px,
+    rgba(245, 239, 225, 0.96) 1px 2.6px
+  );
+}
+.foreLeft {
+  left: -8px;
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset 1px 0 2px rgba(58, 44, 26, 0.3);
+}
+.foreRight {
+  right: -8px;
+  border-radius: 0 2px 2px 0;
+  box-shadow: inset -1px 0 2px rgba(58, 44, 26, 0.3);
+}
+
+/* bottom edge of the page block */
+.deckle {
+  position: absolute;
+  left: 1%;
+  right: 1%;
+  bottom: -10px;
+  height: 11px;
+  z-index: -1;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(180deg, #ece3cd 0%, #dccfb0 100%);
+  box-shadow: 0 3px 6px rgba(20, 14, 4, 0.22);
+}
+
+.castShadow {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: -6%;
+  height: 13%;
+  z-index: -4;
+  background: radial-gradient(
+    50% 50% at 50% 55%,
+    rgba(20, 14, 4, 0.42) 0%,
+    rgba(20, 14, 4, 0.14) 46%,
+    rgba(20, 14, 4, 0) 78%
+  );
+  filter: blur(18px);
+}
+
+/* ── the open spread ──────────────────────────────────────────────────── */
+.spread {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.page {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(200deg, var(--paper) 0%, var(--paper-2) 60%, var(--paper-edge) 100%);
+}
+.page.left {
+  border-radius: 2px 0 0 2px;
+  box-shadow:
+    inset -30px 0 40px -34px rgba(40, 28, 10, 0.5),
+    inset 0 0 70px rgba(40, 28, 10, 0.05);
+}
+.page.right {
+  border-radius: 0 2px 2px 0;
+  box-shadow:
+    inset 30px 0 40px -34px rgba(40, 28, 10, 0.5),
+    inset 0 0 70px rgba(40, 28, 10, 0.05);
+}
+
+.gutter {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 34px;
+  height: 100%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 6;
+  background: linear-gradient(
+    90deg,
+    rgba(40, 28, 10, 0) 0%,
+    rgba(40, 28, 10, 0.13) 46%,
+    rgba(40, 28, 10, 0.2) 50%,
+    rgba(40, 28, 10, 0.13) 54%,
+    rgba(40, 28, 10, 0) 100%
+  );
+}
+
+/* ── controls ────────────────────────────────────────────────────────── */
+.arrows {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  z-index: 40;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.arrowPrev {
+  left: -12%;
+  cursor: w-resize;
+}
+.arrowNext {
+  right: -12%;
+  cursor: e-resize;
+}
+.arrows:disabled {
+  cursor: default;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: var(--paper);
+}
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(243, 236, 223, 0.28);
+  border-radius: 50%;
+  background: rgba(243, 236, 223, 0.06);
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.16s, border-color 0.16s, opacity 0.16s;
+}
+.navBtn:hover:not(:disabled) {
+  background: rgba(243, 236, 223, 0.16);
+  border-color: rgba(243, 236, 223, 0.5);
+}
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.readout {
+  min-width: 9ch;
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: rgba(243, 236, 223, 0.82);
+}
+
+.ticks {
+  display: flex;
+  gap: 6px;
+}
+.tick {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(243, 236, 223, 0.24);
+  cursor: pointer;
+  transition: background 0.16s, transform 0.16s;
+}
+.tick:hover {
+  background: rgba(243, 236, 223, 0.5);
+}
+.tickOn {
+  background: var(--paper);
+  transform: scale(1.15);
+}
+
+.hint {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(243, 236, 223, 0.5);
+  transition: opacity 0.4s;
+}
+.hintGone {
+  opacity: 0;
+}
+
+@media (max-width: 720px) {
+  .scene {
+    --page-w: min(47vw, calc((100dvh - 200px) / 1.42 / 1.4));
+  }
+  .book {
+    transform: rotateX(5deg);
+  }
+}
