@@ -93,44 +93,20 @@ export function StoryPage({
 export function CoverPage({ issue, side }: { issue: Issue; side: Side }) {
   return (
     <div className={`${styles.inner} ${sideClass(side)} ${styles.cover}`}>
-      <div style={{ width: "100%" }}>
-        <hr className={styles.coverRule} />
-        <h1 className={styles.coverMark}>
-          Good News
-          <br />
-          <em>Weekly Edition</em>
-        </h1>
-        <hr className={styles.coverRule} />
-        <div className={`${styles.coverMeta} ${styles.caps}`}>
-          <span>Vol.&nbsp;{toRoman(issue.volume)}</span>
-          <span>No.&nbsp;{issue.number}</span>
-          <span>{formatWeekOf(issue.weekOf)}</span>
-        </div>
-      </div>
-
-      <p className={styles.coverTagline}>
-        Ten good things that happened this week.
+      <hr className={styles.coverRule} />
+      <h1 className={styles.coverMark}>
+        Good News
+        <br />
+        <em>Weekly Edition</em>
+      </h1>
+      <hr className={styles.coverRule} />
+      <p className={`${styles.coverMeta} ${styles.caps}`}>
+        Vol.&nbsp;{toRoman(issue.volume)} &nbsp;&middot;&nbsp; No.&nbsp;{issue.number}{" "}
+        &nbsp;&middot;&nbsp; {formatWeekOf(issue.weekOf)}
       </p>
-
-      <div className={styles.coverCats}>
-        {(Object.keys(CATEGORY_LABELS) as Array<keyof typeof CATEGORY_LABELS>).map(
-          (key) => (
-            <span
-              key={key}
-              className={styles.caps}
-              style={{ color: `var(--${key})` }}
-            >
-              {CATEGORY_LABELS[key]}
-            </span>
-          ),
-        )}
-      </div>
-
       {issue.editorsNote ? (
         <p className={styles.coverNote}>{issue.editorsNote}</p>
-      ) : (
-        <span />
-      )}
+      ) : null}
     </div>
   );
 }

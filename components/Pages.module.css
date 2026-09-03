@@ -136,7 +136,7 @@
 .cover {
   align-items: center;
   text-align: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 .coverRule {
   width: 100%;
@@ -157,32 +157,15 @@
   font-weight: 500;
 }
 .coverMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
   color: var(--ink-soft);
-  padding-top: 0.9em;
-}
-.coverTagline {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: max(15px, calc(var(--page-w) * 0.046));
-  line-height: 1.4;
-  color: var(--ink);
-  margin: 0;
-  max-width: 20ch;
-}
-.coverCats {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  align-items: center;
+  margin: 0.6em 0 0;
 }
 .coverNote {
-  font-size: max(11px, calc(var(--page-w) * 0.032));
-  line-height: 1.6;
+  font-size: max(11px, calc(var(--page-w) * 0.033));
+  line-height: 1.62;
   color: var(--ink-soft);
-  margin: 0;
+  max-width: 30ch;
+  margin: 1.4em 0 0;
 }
 
 /* ── colophon ────────────────────────────────────────────────────────── */
