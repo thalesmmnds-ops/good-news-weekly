@@ -1,0 +1,85 @@
+.leaf {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  z-index: 30;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.leafNext {
+  left: 50%;
+  transform-origin: left center;
+  transform: rotateY(var(--rot, 0deg));
+}
+.leafPrev {
+  left: 0;
+  transform-origin: right center;
+  transform: rotateY(var(--rot, 0deg));
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background:
+    linear-gradient(200deg, var(--paper) 0%, var(--paper-2) 60%, var(--paper-edge) 100%);
+}
+.back {
+  transform: rotateY(180deg);
+}
+
+/* the inner (spine) edge of each face curves toward the binding */
+.leafNext .front {
+  border-radius: 0 2px 2px 0;
+  box-shadow: inset 30px 0 40px -34px rgba(40, 28, 10, 0.5);
+}
+.leafNext .back {
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset -30px 0 40px -34px rgba(40, 28, 10, 0.5);
+}
+.leafPrev .front {
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset -30px 0 40px -34px rgba(40, 28, 10, 0.5);
+}
+.leafPrev .back {
+  border-radius: 0 2px 2px 0;
+  box-shadow: inset 30px 0 40px -34px rgba(40, 28, 10, 0.5);
+}
+
+/* a moving highlight + shade across the lifting page */
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--sheen, 0);
+  background: linear-gradient(
+    108deg,
+    rgba(255, 250, 238, 0.5) 0%,
+    rgba(255, 250, 238, 0) 28%,
+    rgba(40, 28, 10, 0.12) 74%,
+    rgba(40, 28, 10, 0.3) 100%
+  );
+}
+
+/* the shadow the lifting page throws onto the spread beneath it */
+.shadow {
+  position: absolute;
+  top: 2%;
+  bottom: 2%;
+  width: 46%;
+  z-index: 25;
+  pointer-events: none;
+  opacity: var(--sh, 0);
+  filter: blur(11px);
+}
+.shadowNext {
+  left: 50%;
+  background: linear-gradient(90deg, rgba(28, 19, 7, 0.55), rgba(28, 19, 7, 0) 82%);
+}
+.shadowPrev {
+  right: 50%;
+  background: linear-gradient(270deg, rgba(28, 19, 7, 0.55), rgba(28, 19, 7, 0) 82%);
+}

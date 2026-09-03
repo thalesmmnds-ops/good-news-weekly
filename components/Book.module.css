@@ -134,6 +134,28 @@
     inset 0 0 70px rgba(40, 28, 10, 0.05);
 }
 
+/* the outer page revealed from under the lifting sheet during a turn */
+.incoming {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  z-index: 18;
+  background:
+    linear-gradient(200deg, var(--paper) 0%, var(--paper-2) 60%, var(--paper-edge) 100%);
+}
+.incomingRight {
+  left: 50%;
+  border-radius: 0 2px 2px 0;
+  box-shadow: inset 30px 0 40px -34px rgba(40, 28, 10, 0.5);
+}
+.incomingLeft {
+  left: 0;
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset -30px 0 40px -34px rgba(40, 28, 10, 0.5);
+}
+
 .gutter {
   position: absolute;
   top: 0;
