@@ -96,6 +96,12 @@ export const issueSchema = z
     editorsNote: z.string().max(500).optional(),
     /** Set on draft files the pipeline opens as a PR; removed on merge. */
     draft: z.boolean().optional(),
+    /**
+     * A launch/demo issue: real evergreen milestones rather than one week's
+     * news, so the "this week only" date window is not enforced. The pipeline
+     * never sets this.
+     */
+    sampler: z.boolean().optional(),
     stories: z.array(storySchema).length(10),
   })
   .superRefine((issue, ctx) => {
@@ -106,6 +112,24 @@ export const issueSchema = z
         code: z.ZodIssueCode.custom,
         message: "stories must carry each rank 1–10 exactly once",
       });
+    }
+
+    // A weekly issue carries only that week's news. Each source article must
+    // have appeared from a few days before the covered Monday to ten days
+    // after it (room for embargoed studies picked up slightly late).
+    if (!issue.sampler) {
+      const monday = Date.parse(`${issue.weekOf}T00:00:00Z`);
+      const from = monday - 3 * 86_400_000;
+      const to = monday + 10 * 86_400_000;
+      for (const story of issue.stories) {
+        const d = Date.parse(`${story.source.date}T00:00:00Z`);
+        if (d < from || d > to) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `story ${story.rank}: source dated ${story.source.date} is outside the week of ${issue.weekOf}`,
+          });
+        }
+      }
     }
   });
 

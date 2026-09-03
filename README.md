@@ -61,21 +61,22 @@ Each `content/issues/<year>-W<week>.json`:
 {
   "number": 1,          // continuous, No. 1 upward
   "volume": 1,          // one per calendar year
-  "weekOf": "2026-08-31",
+  "weekOf": "2026-08-31",   // the Monday this issue covers
   "published": "2026-09-03",
-  "editorsNote": "optional, <= 2 sentences",
+  "sampler": true,      // optional: a launch/demo issue, exempt from the date window
   "stories": [
     {
       "rank": 1,                       // 1..10, each used once
       "category": "health",            // science | health | conservation | discovery
       "headline": "rewritten in our own words",
       "dek": "one-sentence standfirst",
-      "summary": "40–60 words of original prose, not an excerpt",
+      "summary": "~40–55 words of original prose, not an excerpt",
       "whyItMatters": "optional single line",
+      "image": { /* optional plate — see schema */ },
       "source": {
         "name": "The New England Journal of Medicine",
         "url": "https://…",
-        "date": "2024-07-24",
+        "date": "2026-09-01",          // must fall in the covered week
         "via": "Science",             // optional aggregator credit
         "doi": "10.1056/NEJMoa2407001" // optional
       }
@@ -85,7 +86,10 @@ Each `content/issues/<year>-W<week>.json`:
 }
 ```
 
-`npm run build` fails loudly if an issue file breaks the schema.
+`npm run build` fails loudly if an issue file breaks the schema. It's a
+**weekly**: every story's `source.date` must land from 3 days before the
+covered Monday to 10 days after it. A `sampler` issue is exempt — that's what
+the launch demo uses.
 
 ## Roadmap
 
@@ -93,9 +97,10 @@ Each `content/issues/<year>-W<week>.json`:
 - [x] **M2** The page-turn — spring, drag, keyboard, reduced-motion, deep links
 - [x] **M3** Schema, loader, archive, about, RSS
 - [ ] **M3.1** Per-issue Open Graph images (`opengraph-image.tsx`)
-- [ ] **M4** Weekly pipeline — `pipeline/`: pull candidates from a fixed set of
-      science/conservation feeds, LLM filters the blocklist + ranks + drafts,
-      writes `*.draft.json` + `REVIEW.md`, GitHub Action opens a PR
+- [ ] **M4** Weekly pipeline — `pipeline/`: pull the last 7 days from a fixed set
+      of science/conservation feeds, LLM filters the blocklist + ranks + drafts
+      (+ finds a freely-licensed plate per story), writes `*.draft.json` +
+      `REVIEW.md`, GitHub Action opens a PR
 - [ ] **M5** Polish — snapshot-based page curl, zoom/loupe, analytics
 
 ## Editorial policy
