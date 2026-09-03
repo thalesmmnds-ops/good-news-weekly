@@ -1,0 +1,87 @@
+import { z } from "zod";
+
+/**
+ * The four beats of the Edition. A story belongs to exactly one.
+ * Anything political, violent, criminal, or disaster-driven never
+ * makes it this far — the pipeline filters it long before an issue
+ * file is written.
+ */
+export const CATEGORIES = [
+  "science",
+  "health",
+  "conservation",
+  "discovery",
+] as const;
+
+export const categorySchema = z.enum(CATEGORIES);
+export type Category = z.infer<typeof categorySchema>;
+
+export const CATEGORY_LABELS: Record<Category, string> = {
+  science: "Science",
+  health: "Health & Medicine",
+  conservation: "Conservation & Wildlife",
+  discovery: "Discovery",
+};
+
+const isoDate = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "expected an ISO date, YYYY-MM-DD");
+
+export const sourceSchema = z.object({
+  /** Publication the summary links out to, e.g. "Nature". */
+  name: z.string().min(1),
+  /** Where the reader goes to read the full story. */
+  url: z.string().url(),
+  /** Publication date of the source article. */
+  date: isoDate,
+  /** Optional upstream credit when the story reached us via an aggregator. */
+  via: z.string().min(1).optional(),
+  /** Optional DOI for research-backed items. */
+  doi: z.string().min(1).optional(),
+});
+
+export const storySchema = z.object({
+  /** 1–10, unique within an issue, drives running order. */
+  rank: z.number().int().min(1).max(10),
+  category: categorySchema,
+  /** Rewritten in our own words — never the source's exact headline. */
+  headline: z.string().min(1).max(140),
+  /** One-sentence standfirst. */
+  dek: z.string().min(1).max(240),
+  /** 40–60 words of original prose. Not an excerpt. */
+  summary: z.string().min(1),
+  /** Optional single line: why this matters beyond the week. */
+  whyItMatters: z.string().max(280).optional(),
+  source: sourceSchema,
+});
+
+export type Story = z.infer<typeof storySchema>;
+
+export const issueSchema = z
+  .object({
+    /** Continuous issue number, No. 1 upward. */
+    number: z.number().int().positive(),
+    /** Volume — one per calendar year, Vol. I in the first year. */
+    volume: z.number().int().positive(),
+    /** Monday of the week the issue covers. */
+    weekOf: isoDate,
+    /** Date the issue went live. */
+    published: isoDate,
+    /** Optional two-sentence note from the desk. */
+    editorsNote: z.string().max(500).optional(),
+    /** Set on draft files the pipeline opens as a PR; removed on merge. */
+    draft: z.boolean().optional(),
+    stories: z.array(storySchema).length(10),
+  })
+  .superRefine((issue, ctx) => {
+    const ranks = issue.stories.map((s) => s.rank).sort((a, b) => a - b);
+    const expected = Array.from({ length: 10 }, (_, i) => i + 1);
+    if (ranks.join() !== expected.join()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "stories must carry each rank 1–10 exactly once",
+      });
+    }
+  });
+
+export type Issue = z.infer<typeof issueSchema>;

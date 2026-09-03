@@ -1,0 +1,142 @@
+{
+  "number": 1,
+  "volume": 1,
+  "weekOf": "2026-08-31",
+  "published": "2026-09-03",
+  "editorsNote": "A sampler for our launch. The ten entries below are landmark advances from recent years, arranged exactly as every future weekly Edition will be: one story to a page, drawn from science, medicine, and the natural world, with nothing that frightens. The first true weekly issue follows next Monday.",
+  "stories": [
+    {
+      "rank": 1,
+      "category": "health",
+      "headline": "A twice-yearly injection blocked every HIV infection in a large prevention trial",
+      "dek": "In the PURPOSE 1 study, none of the participants who received lenacapavir acquired HIV.",
+      "summary": "The PURPOSE 1 trial tested lenacapavir, an antiretroviral given as an injection once every six months, against daily prevention pills in more than 5,000 women and girls across sub-Saharan Africa. Not one participant in the lenacapavir group acquired HIV over the study period, a result striking enough that Science later named it the year's foremost breakthrough.",
+      "whyItMatters": "A shot needed only twice a year could protect people for whom a daily pill has never been practical.",
+      "source": {
+        "name": "The New England Journal of Medicine",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2407001",
+        "date": "2024-07-24",
+        "via": "Science",
+        "doi": "10.1056/NEJMoa2407001"
+      }
+    },
+    {
+      "rank": 2,
+      "category": "health",
+      "headline": "The first medicine that edits a patient's own genes was approved for sickle cell disease",
+      "dek": "Casgevy uses CRISPR to switch a protective form of hemoglobin back on.",
+      "summary": "Regulators in the United Kingdom and the United States cleared Casgevy, a one-time treatment that edits a patient's own blood stem cells with CRISPR so they resume making fetal hemoglobin. In trials, the large majority of people with severe sickle cell disease went at least a year without the painful vaso-occlusive crises that define the illness.",
+      "whyItMatters": "It is the first CRISPR-based therapy to reach patients, and a template for other inherited diseases.",
+      "source": {
+        "name": "U.S. Food and Drug Administration",
+        "url": "https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease",
+        "date": "2023-12-08"
+      }
+    },
+    {
+      "rank": 3,
+      "category": "science",
+      "headline": "A fusion experiment released more energy than the lasers that drove it delivered",
+      "dek": "The National Ignition Facility crossed the long-sought scientific breakeven line.",
+      "summary": "Researchers at Lawrence Livermore National Laboratory focused 192 lasers onto a peppercorn-sized fuel capsule and, for the first time, the fusion reactions gave back more energy than the laser light delivered to the target. The laboratory has since repeated and exceeded the result several times.",
+      "whyItMatters": "Scientific breakeven had stood as fusion's basic proof of principle for more than fifty years.",
+      "source": {
+        "name": "U.S. Department of Energy",
+        "url": "https://www.energy.gov/articles/doe-national-laboratory-makes-history-achieving-fusion-ignition",
+        "date": "2022-12-13"
+      }
+    },
+    {
+      "rank": 4,
+      "category": "discovery",
+      "headline": "The James Webb telescope returned the deepest infrared image of the universe yet",
+      "dek": "Thousands of galaxies, some more than 13 billion years old, in a patch of sky the width of a grain of sand held at arm's length.",
+      "summary": "NASA released the first full-color science image from the James Webb Space Telescope: a deep field around galaxy cluster SMACS 0723, whose mass bends and magnifies the light of far more distant galaxies behind it. Webb gathered the exposure in roughly twelve hours, a depth that took the Hubble telescope weeks to reach.",
+      "whyItMatters": "Webb now routinely observes galaxies as they formed in the first few hundred million years after the Big Bang.",
+      "source": {
+        "name": "NASA",
+        "url": "https://www.nasa.gov/image-article/nasas-webb-delivers-deepest-infrared-image-of-universe-yet/",
+        "date": "2022-07-11"
+      }
+    },
+    {
+      "rank": 5,
+      "category": "conservation",
+      "headline": "The ozone layer is on track to heal completely within decades",
+      "dek": "A UN-backed panel confirmed the Antarctic ozone hole is shrinking as banned chemicals fade from the air.",
+      "summary": "The quadrennial Scientific Assessment of Ozone Depletion found the stratospheric ozone layer steadily recovering as chlorofluorocarbon production phased out under the Montreal Protocol keeps declining. On current trends it should return to 1980 levels around 2066 over Antarctica, 2045 over the Arctic, and 2040 across the rest of the world.",
+      "whyItMatters": "It is the clearest proof yet that a coordinated global response can reverse damage to the atmosphere.",
+      "source": {
+        "name": "United Nations Environment Programme",
+        "url": "https://www.unep.org/news-and-stories/press-release/ozone-layer-recovery-track-helping-avoid-global-warming-05degc",
+        "date": "2023-01-09"
+      }
+    },
+    {
+      "rank": 6,
+      "category": "health",
+      "headline": "The World Health Organization recommended a second, low-cost malaria vaccine",
+      "dek": "R21/Matrix-M can be manufactured at scale for a few dollars a dose.",
+      "summary": "The WHO advised countries to roll out R21/Matrix-M, developed at the University of Oxford, after trials showed roughly a 75% reduction in symptomatic malaria over a year in areas with seasonal transmission. The Serum Institute of India holds capacity for more than 100 million doses a year, easing the supply shortfall that limited the first vaccine.",
+      "whyItMatters": "Malaria still kills around half a million people a year, most of them children under five.",
+      "source": {
+        "name": "World Health Organization",
+        "url": "https://www.who.int/news/item/02-10-2023-who-recommends-r21-matrix-m-vaccine-for-malaria-prevention-in-updated-advice-on-immunization",
+        "date": "2023-10-02"
+      }
+    },
+    {
+      "rank": 7,
+      "category": "conservation",
+      "headline": "Nepal became the first country to nearly triple its wild tiger population",
+      "dek": "A national survey counted 355 tigers, up from 121 in 2009.",
+      "summary": "Nepal's 2022 tiger census recorded 355 wild tigers, close to three times the number counted when the country joined a global pledge to double tiger numbers by 2022. Community-managed buffer zones, stronger anti-poaching patrols, and restored corridors between protected areas drove the recovery.",
+      "whyItMatters": "It shows a national tiger comeback is achievable within a single decade.",
+      "source": {
+        "name": "World Wildlife Fund",
+        "url": "https://www.worldwildlife.org/stories/nepal-s-tiger-population-nearly-triples",
+        "date": "2022-07-29"
+      }
+    },
+    {
+      "rank": 8,
+      "category": "conservation",
+      "headline": "Mosquitoes carrying a common bacterium cut dengue cases by 77% in a city trial",
+      "dek": "A randomized study in Yogyakarta released Aedes aegypti infected with Wolbachia.",
+      "summary": "Researchers with the World Mosquito Program released mosquitoes carrying Wolbachia, a bacterium that stops the dengue virus replicating inside the insect, across parts of Yogyakarta, Indonesia. Neighborhoods that received the mosquitoes recorded 77% fewer dengue cases and 86% fewer hospitalizations than untreated areas.",
+      "whyItMatters": "The released mosquitoes establish themselves permanently, so protection continues without repeated spraying.",
+      "source": {
+        "name": "The New England Journal of Medicine",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2030243",
+        "date": "2021-06-10",
+        "doi": "10.1056/NEJMoa2030243"
+      }
+    },
+    {
+      "rank": 9,
+      "category": "discovery",
+      "headline": "Scientists described more than 380 species new to science in the Greater Mekong",
+      "dek": "Among them a thick-thumbed bat, a color-changing lizard, and an orchid that resembles a Muppet.",
+      "summary": "A WWF review compiled 380 plants and animals newly described by scientists across Cambodia, Laos, Myanmar, Thailand, and Vietnam during 2021 and 2022, including 290 plants, 19 fish, 24 amphibians, 46 reptiles, and one mammal. Most were found in forests and limestone karst that conservationists are working to protect.",
+      "whyItMatters": "The region keeps yielding species unknown to science even as its habitats come under pressure.",
+      "source": {
+        "name": "World Wildlife Fund",
+        "url": "https://www.worldwildlife.org/publications/new-species-discoveries-in-the-greater-mekong-2021-2022",
+        "date": "2023-05-22"
+      }
+    },
+    {
+      "rank": 10,
+      "category": "science",
+      "headline": "An AI model predicted the shape of almost every protein known to science",
+      "dek": "DeepMind's AlphaFold released structures for some 200 million proteins, free to use.",
+      "summary": "DeepMind and EMBL's European Bioinformatics Institute expanded the AlphaFold Protein Structure Database from about one million entries to roughly 200 million, covering nearly every organism with a sequenced genome. Working out a protein's folded shape once took months in the laboratory; researchers can now look most of them up in seconds.",
+      "whyItMatters": "Protein structures guide work on enzymes, drugs, and vaccines, and the entire database is openly licensed.",
+      "source": {
+        "name": "DeepMind",
+        "url": "https://deepmind.google/discover/blog/alphafold-reveals-the-structure-of-the-protein-universe/",
+        "date": "2022-07-28"
+      }
+    }
+  ]
+}

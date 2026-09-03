@@ -1,0 +1,244 @@
+.leafInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 6.5%, 60px);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------- cover */
+
+.cover {
+  align-items: center;
+  text-align: center;
+}
+
+.coverRule {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--hairline-strong);
+  margin: 0;
+}
+
+.coverTop {
+  width: 100%;
+  padding-bottom: 14px;
+}
+
+.coverWordmark {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(30px, 7.6vw, 58px);
+  line-height: 1.02;
+  letter-spacing: -0.012em;
+  margin: 0.36em 0 0.24em;
+}
+
+.coverWordmark em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.coverLine {
+  display: flex;
+  justify-content: center;
+  gap: 0.9em;
+  color: var(--ink-soft);
+  padding-top: 12px;
+}
+
+.coverBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4em;
+  padding: 8% 4%;
+}
+
+.coverTagline {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(19px, 3.4vw, 27px);
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: 24ch;
+  margin: 0;
+}
+
+.coverNote {
+  font-size: 0.9rem;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0;
+}
+
+.coverCats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4em 1.1em;
+}
+
+.coverFoot {
+  color: var(--ink-faint);
+  padding-top: 14px;
+}
+
+/* ---------------------------------------------------------------- story */
+
+.storyHead {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: clamp(16px, 4%, 34px);
+  padding-bottom: clamp(14px, 3%, 26px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.rank {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(52px, 13vw, 96px);
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.headMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55em;
+  padding-top: 0.4em;
+}
+
+.headline {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(21px, 3.5vw, 30px);
+  line-height: 1.16;
+  letter-spacing: -0.006em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.storyBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding-top: clamp(16px, 3.4%, 30px);
+  min-height: 0;
+}
+
+.dek {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(16px, 2.5vw, 20px);
+  line-height: 1.42;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.summary {
+  font-size: clamp(15px, 2.2vw, 18px);
+  line-height: 1.66;
+  margin: 0;
+}
+
+.why {
+  display: flex;
+  gap: 0.8em;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  border-left: 2px solid var(--hairline-strong);
+  padding-left: 1em;
+  margin: 0.2em 0 0;
+}
+
+.whyLabel {
+  flex: none;
+}
+
+.storyFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6em 1.2em;
+  padding-top: clamp(14px, 3%, 24px);
+  border-top: 1px solid var(--hairline);
+  color: var(--ink-faint);
+}
+
+.sourceLink {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--hairline-strong);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.18s;
+}
+
+.sourceLink:hover {
+  text-decoration-color: var(--ink);
+}
+
+.sourceVia {
+  color: var(--ink-faint);
+}
+
+/* ------------------------------------------------------------- colophon */
+
+.colophon {
+  gap: 1.2em;
+}
+
+.colophonTitle {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(24px, 4.6vw, 36px);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.colophonBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+  font-size: 0.96rem;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  overflow-y: auto;
+}
+
+.colophonBody strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.colophonBody a {
+  color: var(--ink);
+  text-decoration-color: var(--hairline-strong);
+  text-underline-offset: 3px;
+}
+
+.pledge {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(17px, 2.8vw, 22px);
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.colophonFoot {
+  color: var(--ink-faint);
+  border-top: 1px solid var(--hairline);
+  padding-top: 14px;
+}
