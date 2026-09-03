@@ -33,9 +33,15 @@ export const TurnLeaf = forwardRef<
         const p = clamp01(progress);
         const deg = (dir === "next" ? -180 : 180) * p;
         leafRef.current?.style.setProperty("--rot", `${deg.toFixed(2)}deg`);
-        const mid = Math.sin(Math.PI * p); // peaks at the half-turn
-        sheenRef.current?.style.setProperty("--sheen", (mid * 0.5).toFixed(3));
-        shadowRef.current?.style.setProperty("--sh", (mid * 0.5).toFixed(3));
+
+        const arc = Math.sin(Math.PI * p); // peaks at the half-turn
+        sheenRef.current?.style.setProperty("--sheen", (arc * 0.5).toFixed(3));
+
+        // the cast shadow is the lifting page darkening the leaf beneath it:
+        // an early-turn effect. It must be gone by the time the sheet is up
+        // and over, or it lingers on the page just revealed.
+        const cast = arc * Math.max(0, 1 - p * 1.9);
+        shadowRef.current?.style.setProperty("--sh", (cast * 0.6).toFixed(3));
       },
     }),
     [dir],
