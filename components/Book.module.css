@@ -18,6 +18,13 @@
   perspective-origin: 50% 34%;
 }
 
+/* closed: a single cover-width object, sitting shut until you open it --
+   no transition here, the width snaps the instant a turn starts, same as
+   every other page: the leaf's swing is the only thing that visibly moves */
+.sceneClosed {
+  width: var(--page-w);
+}
+
 /* one flat tilt — no nested 3D — so the book reads as an object on a desk */
 .book {
   position: absolute;

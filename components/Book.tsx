@@ -369,10 +369,10 @@ export function Book({
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.scene}>
+      <div className={`${styles.scene}${restingClosed ? ` ${styles.sceneClosed}` : ""}`}>
         <div className={styles.book} ref={bookRef}>
           <div className={styles.castShadow} aria-hidden />
-          <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden />
+          {showContent ? <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden /> : null}
           <div className={`${styles.fore} ${styles.foreRight}`} aria-hidden />
           <div className={styles.deckle} aria-hidden />
 
