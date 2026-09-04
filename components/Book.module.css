@@ -16,12 +16,6 @@
   height: var(--page-h);
   perspective: 3200px;
   perspective-origin: 50% 34%;
-  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* closed: a single cover-width object, sitting shut until you open it */
-.sceneClosed {
-  width: var(--page-w);
 }
 
 /* one flat tilt — no nested 3D — so the book reads as an object on a desk */

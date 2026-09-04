@@ -364,76 +364,83 @@ export function Book({
 
   const s = turn ? turn.s : spread;
   const coverTurn = turn?.kind === "cover" ? turn : null;
-  const showSpread = opened || !!coverTurn;
+  const restingClosed = !opened && !coverTurn;
+  const showContent = !restingClosed;
 
   return (
     <div className={styles.wrap}>
-      <div className={`${styles.scene}${showSpread ? "" : ` ${styles.sceneClosed}`}`}>
+      <div className={styles.scene}>
         <div className={styles.book} ref={bookRef}>
           <div className={styles.castShadow} aria-hidden />
-          {showSpread ? <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden /> : null}
+          <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden />
           <div className={`${styles.fore} ${styles.foreRight}`} aria-hidden />
           <div className={styles.deckle} aria-hidden />
 
-          {showSpread ? (
-            <div className={styles.spread}>
-              <div className={`${styles.page} ${styles.left} grain`}>{left?.node}</div>
-              <div className={`${styles.page} ${styles.right} grain`}>{right?.node}</div>
-
-              {turn && !coverTurn ? (
-                <>
-                  <div
-                    className={`${styles.incoming} ${
-                      turn.dir === "next" ? styles.incomingRight : styles.incomingLeft
-                    } grain`}
-                  >
-                    {turn.dir === "next" ? page(s * 2 + 3) : page(s * 2 - 2)}
-                  </div>
-                  <TurnLeaf
-                    key={`${turn.dir}-${turn.s}`}
-                    ref={turnApi}
-                    dir={turn.dir}
-                    front={turn.dir === "next" ? page(s * 2 + 1) : page(s * 2)}
-                    back={turn.dir === "next" ? page(s * 2 + 2) : page(s * 2 - 1)}
-                  />
-                </>
-              ) : null}
-
-              {coverTurn ? (
-                <TurnLeaf
-                  key="cover"
-                  ref={turnApi}
-                  dir="next"
-                  front={<div className={styles.coverFace} />}
-                  back={<div className={styles.coverFace} />}
-                />
-              ) : null}
-
-              {opened && !coverTurn ? (
-                <>
-                  <div
-                    className={`${styles.dragZone} ${styles.dragZoneLeft}`}
-                    onPointerDown={onZonePointerDown("prev")}
-                    aria-hidden
-                  />
-                  <div
-                    className={`${styles.dragZone} ${styles.dragZoneRight}`}
-                    onPointerDown={onZonePointerDown("next")}
-                    aria-hidden
-                  />
-                </>
-              ) : null}
-
-              <div className={styles.gutter} aria-hidden />
+          {/* the spread is always mounted, exactly like any other turn --
+              "closed" is just an opaque board sitting on top of it */}
+          <div className={styles.spread}>
+            <div className={`${styles.page} ${styles.left} grain`}>
+              {showContent ? left?.node : null}
             </div>
-          ) : (
-            <button
-              type="button"
-              className={`${styles.closedCover} grain`}
-              onClick={openCover}
-              aria-label="Open the Edition"
-            />
-          )}
+            <div className={`${styles.page} ${styles.right} grain`}>
+              {showContent ? right?.node : null}
+            </div>
+
+            {turn && !coverTurn ? (
+              <>
+                <div
+                  className={`${styles.incoming} ${
+                    turn.dir === "next" ? styles.incomingRight : styles.incomingLeft
+                  } grain`}
+                >
+                  {turn.dir === "next" ? page(s * 2 + 3) : page(s * 2 - 2)}
+                </div>
+                <TurnLeaf
+                  key={`${turn.dir}-${turn.s}`}
+                  ref={turnApi}
+                  dir={turn.dir}
+                  front={turn.dir === "next" ? page(s * 2 + 1) : page(s * 2)}
+                  back={turn.dir === "next" ? page(s * 2 + 2) : page(s * 2 - 1)}
+                />
+              </>
+            ) : null}
+
+            {coverTurn ? (
+              <TurnLeaf
+                key="cover"
+                ref={turnApi}
+                dir="next"
+                front={<div className={styles.coverFace} />}
+                back={<div className={styles.coverFace} />}
+              />
+            ) : null}
+
+            {opened && !coverTurn ? (
+              <>
+                <div
+                  className={`${styles.dragZone} ${styles.dragZoneLeft}`}
+                  onPointerDown={onZonePointerDown("prev")}
+                  aria-hidden
+                />
+                <div
+                  className={`${styles.dragZone} ${styles.dragZoneRight}`}
+                  onPointerDown={onZonePointerDown("next")}
+                  aria-hidden
+                />
+              </>
+            ) : null}
+
+            {restingClosed ? (
+              <button
+                type="button"
+                className={`${styles.closedCover} grain`}
+                onClick={openCover}
+                aria-label="Open the Edition"
+              />
+            ) : null}
+
+            <div className={styles.gutter} aria-hidden />
+          </div>
         </div>
 
         {opened && !coverTurn ? (
