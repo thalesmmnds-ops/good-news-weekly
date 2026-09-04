@@ -22,6 +22,10 @@ const LEAN_REST_X = 11;
 const LEAN_MAX_X = 4;
 const LEAN_MAX_Y = 3.5;
 const DRAG_SPAN = 0.68; // fraction of a page's width that spans a full drag turn
+// the cover only needs to swing to edge-on (90°, half of TurnLeaf's 180°
+// range) to clear the spread -- at that angle it's foreshortened to a
+// sliver, so handing off to the flat static spread underneath is seamless
+const COVER_SWING = 0.5;
 
 type Dir = "next" | "prev";
 type Turn = { dir: Dir; s: number; kind?: "cover" } | null;
@@ -107,6 +111,10 @@ export function Book({
     busyRef.current = false;
     if (t?.kind === "cover") {
       setOpened(committed);
+      // closing the cover always returns to the title spread, like a real
+      // book: opening it again starts from page one, not wherever a
+      // previous session's turn had gotten to
+      if (!committed) settle(0);
       setTurn(null);
       return;
     }
@@ -124,9 +132,13 @@ export function Book({
       const s = springRef.current;
       const target = targetRef.current;
       stepSpring(s, target, dt);
-      turnApi.current?.apply(s.t);
+      // the cover only needs to swing clear of the spread, not flip all the
+      // way over like an interior leaf joining the opposite stack — capping
+      // its travel keeps it from sweeping across into the other page
+      const scale = turnRef.current?.kind === "cover" ? COVER_SWING : 1;
+      turnApi.current?.apply(s.t * scale);
       if (isSettled(s, target) || now - startedAt > 2500) {
-        turnApi.current?.apply(target);
+        turnApi.current?.apply(target * scale);
         rafRef.current = null;
         finish();
         return;
@@ -151,6 +163,7 @@ export function Book({
       if (busyRef.current || turnRef.current) return;
       if (reduced || (typeof document !== "undefined" && document.hidden)) {
         setOpened(to === 1);
+        if (to === 0) settle(0);
         return;
       }
       busyRef.current = true;
@@ -159,7 +172,7 @@ export function Book({
       setTurn({ dir: "next", s: spread, kind: "cover" });
       requestAnimationFrame(() => drive());
     },
-    [drive, reduced, setTurn, spread],
+    [drive, reduced, settle, setTurn, spread],
   );
   const openCover = useCallback(() => beginCover(1), [beginCover]);
   const closeCover = useCallback(() => beginCover(0), [beginCover]);
@@ -358,7 +371,7 @@ export function Book({
       rafRef.current = null;
       springRef.current = { t: p, v: 0 };
       if (!turnRef.current) setTurn({ dir: "next", s: spread, kind: "cover" });
-      window.setTimeout(() => turnApi.current?.apply(p), 60);
+      window.setTimeout(() => turnApi.current?.apply(p * COVER_SWING), 60);
     };
   }, [setTurn, spread]);
 
