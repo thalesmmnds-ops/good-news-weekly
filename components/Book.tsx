@@ -1,8 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 
-import { isSettled, stepSpring, type Spring } from "@/lib/pageCurl";
+import { clamp, isSettled, stepSpring, type Spring } from "@/lib/pageCurl";
 
 import { TurnLeaf, type TurnHandle } from "./TurnLeaf";
 import styles from "./Book.module.css";
@@ -15,9 +21,19 @@ export type BookPage = {
 const LEAN_REST_X = 11;
 const LEAN_MAX_X = 4;
 const LEAN_MAX_Y = 3.5;
+const DRAG_SPAN = 0.68; // fraction of a page's width that spans a full drag turn
 
 type Dir = "next" | "prev";
 type Turn = { dir: Dir; s: number } | null;
+type Drag = {
+  dir: Dir;
+  x0: number;
+  pageWidth: number;
+  lastX: number;
+  lastT: number;
+  vel: number;
+  moved: number;
+} | null;
 
 export function Book({
   pages,
@@ -39,9 +55,11 @@ export function Book({
   const turnApi = useRef<TurnHandle>(null);
   const turnRef = useRef<Turn>(null);
   const springRef = useRef<Spring>({ t: 0, v: 0 });
+  const targetRef = useRef<0 | 1>(1);
   const rafRef = useRef<number | null>(null);
   const lastRef = useRef(0);
   const busyRef = useRef(false);
+  const dragRef = useRef<Drag>(null);
 
   const setTurn = useCallback((t: Turn) => {
     turnRef.current = t;
@@ -82,8 +100,9 @@ export function Book({
   // ------------------------------------------------------------- clock
   const finish = useCallback(() => {
     const t = turnRef.current;
+    const committed = targetRef.current === 1;
     busyRef.current = false;
-    if (t) settle(t.dir === "next" ? t.s + 1 : t.s - 1);
+    if (t && committed) settle(t.dir === "next" ? t.s + 1 : t.s - 1);
     setTurn(null);
   }, [setTurn, settle]);
 
@@ -95,10 +114,11 @@ export function Book({
       const dt = Math.min(0.032, (now - lastRef.current) / 1000 || 0.016);
       lastRef.current = now;
       const s = springRef.current;
-      stepSpring(s, 1, dt);
+      const target = targetRef.current;
+      stepSpring(s, target, dt);
       turnApi.current?.apply(s.t);
-      if (isSettled(s, 1) || now - startedAt > 2500) {
-        turnApi.current?.apply(1);
+      if (isSettled(s, target) || now - startedAt > 2500) {
+        turnApi.current?.apply(target);
         rafRef.current = null;
         finish();
         return;
@@ -116,24 +136,103 @@ export function Book({
   );
 
   // ------------------------------------------------------------- turning
-  const step = useCallback(
-    (dir: Dir) => {
-      if (busyRef.current || turnRef.current) return;
-      if (dir === "next" && spread >= spreadCount - 1) return;
-      if (dir === "prev" && spread <= 0) return;
+  /** Bounds/mode checks and turn setup shared by a click and a drag start. */
+  const beginTurn = useCallback(
+    (dir: Dir): boolean => {
+      if (busyRef.current || turnRef.current) return false;
+      if (dir === "next" && spread >= spreadCount - 1) return false;
+      if (dir === "prev" && spread <= 0) return false;
 
       if (reduced || (typeof document !== "undefined" && document.hidden)) {
         settle(dir === "next" ? spread + 1 : spread - 1);
-        return;
+        return false;
       }
 
       busyRef.current = true;
       springRef.current = { t: 0, v: 0 };
       setTurn({ dir, s: spread });
+      return true;
+    },
+    [reduced, settle, setTurn, spread, spreadCount],
+  );
+
+  const step = useCallback(
+    (dir: Dir) => {
+      if (!beginTurn(dir)) return;
+      targetRef.current = 1;
       requestAnimationFrame(() => drive());
     },
-    [drive, reduced, settle, setTurn, spread, spreadCount],
+    [beginTurn, drive],
   );
+
+  // --------------------------------------------------------------- dragging
+  const onDragMove = useCallback((e: PointerEvent) => {
+    const d = dragRef.current;
+    if (!d) return;
+    const span = d.pageWidth * DRAG_SPAN;
+    const dx = e.clientX - d.x0;
+    d.moved = Math.max(d.moved, Math.abs(dx));
+
+    const raw = d.dir === "next" ? -dx / span : dx / span;
+    const p = raw < 0 ? 0 : raw > 1 ? 1 : raw;
+
+    const now = performance.now();
+    const dt = Math.max(1, now - d.lastT) / 1000;
+    const stepDx = e.clientX - d.lastX;
+    d.vel = (d.dir === "next" ? -stepDx : stepDx) / span / dt;
+    d.lastX = e.clientX;
+    d.lastT = now;
+
+    springRef.current.t = p;
+    turnApi.current?.apply(p);
+  }, []);
+
+  const onDragEnd = useCallback(() => {
+    const d = dragRef.current;
+    dragRef.current = null;
+    window.removeEventListener("pointermove", onDragMove);
+    if (!d) return;
+
+    const p = springRef.current.t;
+    const tap = d.moved < 6;
+    const commit = tap || p > 0.32 || d.vel > 1.1;
+
+    springRef.current.v = clamp(d.vel, -7, 7); // carry the fling into the spring
+    targetRef.current = commit ? 1 : 0;
+    drive();
+  }, [drive, onDragMove]);
+
+  const onZonePointerDown = useCallback(
+    (dir: Dir) => (e: ReactPointerEvent<HTMLDivElement>) => {
+      if (e.button !== 0 || dragRef.current) return;
+      const pageWidth = (e.currentTarget.parentElement?.clientWidth ?? window.innerWidth) / 2;
+      const x0 = e.clientX;
+
+      if (!beginTurn(dir)) return;
+
+      dragRef.current = {
+        dir,
+        x0,
+        pageWidth,
+        lastX: x0,
+        lastT: performance.now(),
+        vel: 0,
+        moved: 0,
+      };
+      window.addEventListener("pointermove", onDragMove);
+      window.addEventListener("pointerup", onDragEnd, { once: true });
+      window.addEventListener("pointercancel", onDragEnd, { once: true });
+    },
+    [beginTurn, onDragEnd, onDragMove],
+  );
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("pointermove", onDragMove);
+      window.removeEventListener("pointerup", onDragEnd);
+      window.removeEventListener("pointercancel", onDragEnd);
+    };
+  }, [onDragEnd, onDragMove]);
 
   const go = useCallback(
     (to: number) => {
@@ -245,6 +344,19 @@ export function Book({
                 />
               </>
             ) : null}
+
+            <div
+              className={`${styles.dragZone} ${styles.dragZoneLeft}`}
+              style={{ pointerEvents: spread <= 0 ? "none" : "auto" }}
+              onPointerDown={onZonePointerDown("prev")}
+              aria-hidden
+            />
+            <div
+              className={`${styles.dragZone} ${styles.dragZoneRight}`}
+              style={{ pointerEvents: spread >= spreadCount - 1 ? "none" : "auto" }}
+              onPointerDown={onZonePointerDown("next")}
+              aria-hidden
+            />
 
             <div className={styles.gutter} aria-hidden />
           </div>

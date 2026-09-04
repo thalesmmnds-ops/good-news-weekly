@@ -154,6 +154,27 @@
   box-shadow: inset -30px 0 40px -34px rgba(40, 28, 10, 0.5);
 }
 
+/* grab the outer edge of a page and drag to turn it, like a real page corner */
+.dragZone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--page-w) * 0.16);
+  z-index: 35;
+  cursor: grab;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+.dragZone:active {
+  cursor: grabbing;
+}
+.dragZoneLeft {
+  left: 0;
+}
+.dragZoneRight {
+  right: 0;
+}
+
 .gutter {
   position: absolute;
   top: 0;
