@@ -197,7 +197,10 @@
   height: 100%;
   transform: translateX(-50%);
   pointer-events: none;
-  z-index: 6;
+  /* above the incoming-page overlay (18) so it isn't half-hidden for the
+     whole turn and then pop back in when that overlay unmounts; still below
+     the turning sheet (25/30), which should cover it while passing over */
+  z-index: 20;
   background: linear-gradient(
     90deg,
     rgba(40, 28, 10, 0) 0%,
