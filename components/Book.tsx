@@ -24,7 +24,7 @@ const LEAN_MAX_Y = 3.5;
 const DRAG_SPAN = 0.68; // fraction of a page's width that spans a full drag turn
 
 type Dir = "next" | "prev";
-type Turn = { dir: Dir; s: number } | null;
+type Turn = { dir: Dir; s: number; kind?: "cover" } | null;
 type Drag = {
   dir: Dir;
   x0: number;
@@ -53,8 +53,6 @@ export function Book({
   // always starts shut, like picking up a physical book; a deep link still
   // opens straight to the right spread once you tap it open
   const [opened, setOpened] = useState(false);
-  const open = useCallback(() => setOpened(true), []);
-  const close = useCallback(() => setOpened(false), []);
 
   const bookRef = useRef<HTMLDivElement>(null);
   const turnApi = useRef<TurnHandle>(null);
@@ -107,6 +105,11 @@ export function Book({
     const t = turnRef.current;
     const committed = targetRef.current === 1;
     busyRef.current = false;
+    if (t?.kind === "cover") {
+      setOpened(committed);
+      setTurn(null);
+      return;
+    }
     if (t && committed) settle(t.dir === "next" ? t.s + 1 : t.s - 1);
     setTurn(null);
   }, [setTurn, settle]);
@@ -140,6 +143,27 @@ export function Book({
     [],
   );
 
+  // the cover is just another leaf: same spring, same TurnLeaf, hinged at
+  // the gutter — opening drives it 0 (flat, shut) -> 1 (swung past vertical),
+  // closing drives the same leaf back down from 1 -> 0
+  const beginCover = useCallback(
+    (to: 0 | 1) => {
+      if (busyRef.current || turnRef.current) return;
+      if (reduced || (typeof document !== "undefined" && document.hidden)) {
+        setOpened(to === 1);
+        return;
+      }
+      busyRef.current = true;
+      springRef.current = { t: to === 1 ? 0 : 1, v: 0 };
+      targetRef.current = to;
+      setTurn({ dir: "next", s: spread, kind: "cover" });
+      requestAnimationFrame(() => drive());
+    },
+    [drive, reduced, setTurn, spread],
+  );
+  const openCover = useCallback(() => beginCover(1), [beginCover]);
+  const closeCover = useCallback(() => beginCover(0), [beginCover]);
+
   // ------------------------------------------------------------- turning
   /** Bounds/mode checks and turn setup shared by a click and a drag start. */
   const beginTurn = useCallback(
@@ -147,11 +171,11 @@ export function Book({
       if (busyRef.current || turnRef.current) return false;
       // keep going past either end and the book shuts, like a real one
       if (dir === "next" && spread >= spreadCount - 1) {
-        close();
+        closeCover();
         return false;
       }
       if (dir === "prev" && spread <= 0) {
-        close();
+        closeCover();
         return false;
       }
 
@@ -165,7 +189,7 @@ export function Book({
       setTurn({ dir, s: spread });
       return true;
     },
-    [close, reduced, settle, setTurn, spread, spreadCount],
+    [closeCover, reduced, settle, setTurn, spread, spreadCount],
   );
 
   const step = useCallback(
@@ -270,7 +294,7 @@ export function Book({
       if (!opened) {
         if (["ArrowRight", "ArrowLeft", "PageDown", "PageUp", "Home", "End", " ", "Enter"].includes(e.key)) {
           e.preventDefault();
-          open();
+          openCover();
         }
         return;
       }
@@ -290,7 +314,7 @@ export function Book({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [go, open, opened, spreadCount, step]);
+  }, [go, openCover, opened, spreadCount, step]);
 
   // the book leans toward the pointer, so its depth reads as a solid object
   useEffect(() => {
@@ -318,7 +342,8 @@ export function Book({
     };
   }, []);
 
-  // dev aid: window.__gnwTurn("next", 0.4) mounts a turn and freezes it
+  // dev aid: window.__gnwTurn("next", 0.4) mounts a turn and freezes it;
+  // window.__gnwCover(0.4) does the same for the cover-open/close leaf
   useEffect(() => {
     if (process.env.NODE_ENV === "production") return;
     (window as unknown as { __gnwTurn?: (d: Dir, p: number) => void }).__gnwTurn = (d, p) => {
@@ -328,25 +353,34 @@ export function Book({
       if (!turnRef.current) setTurn({ dir: d, s: spread });
       window.setTimeout(() => turnApi.current?.apply(p), 60);
     };
+    (window as unknown as { __gnwCover?: (p: number) => void }).__gnwCover = (p) => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+      springRef.current = { t: p, v: 0 };
+      if (!turnRef.current) setTurn({ dir: "next", s: spread, kind: "cover" });
+      window.setTimeout(() => turnApi.current?.apply(p), 60);
+    };
   }, [setTurn, spread]);
 
   const s = turn ? turn.s : spread;
+  const coverTurn = turn?.kind === "cover" ? turn : null;
+  const showSpread = opened || !!coverTurn;
 
   return (
     <div className={styles.wrap}>
-      <div className={`${styles.scene}${opened ? "" : ` ${styles.sceneClosed}`}`}>
+      <div className={`${styles.scene}${showSpread ? "" : ` ${styles.sceneClosed}`}`}>
         <div className={styles.book} ref={bookRef}>
           <div className={styles.castShadow} aria-hidden />
-          {opened ? <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden /> : null}
+          {showSpread ? <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden /> : null}
           <div className={`${styles.fore} ${styles.foreRight}`} aria-hidden />
           <div className={styles.deckle} aria-hidden />
 
-          {opened ? (
+          {showSpread ? (
             <div className={styles.spread}>
               <div className={`${styles.page} ${styles.left} grain`}>{left?.node}</div>
               <div className={`${styles.page} ${styles.right} grain`}>{right?.node}</div>
 
-              {turn ? (
+              {turn && !coverTurn ? (
                 <>
                   <div
                     className={`${styles.incoming} ${
@@ -365,16 +399,30 @@ export function Book({
                 </>
               ) : null}
 
-              <div
-                className={`${styles.dragZone} ${styles.dragZoneLeft}`}
-                onPointerDown={onZonePointerDown("prev")}
-                aria-hidden
-              />
-              <div
-                className={`${styles.dragZone} ${styles.dragZoneRight}`}
-                onPointerDown={onZonePointerDown("next")}
-                aria-hidden
-              />
+              {coverTurn ? (
+                <TurnLeaf
+                  key="cover"
+                  ref={turnApi}
+                  dir="next"
+                  front={<div className={styles.coverFace} />}
+                  back={<div className={styles.coverFace} />}
+                />
+              ) : null}
+
+              {opened && !coverTurn ? (
+                <>
+                  <div
+                    className={`${styles.dragZone} ${styles.dragZoneLeft}`}
+                    onPointerDown={onZonePointerDown("prev")}
+                    aria-hidden
+                  />
+                  <div
+                    className={`${styles.dragZone} ${styles.dragZoneRight}`}
+                    onPointerDown={onZonePointerDown("next")}
+                    aria-hidden
+                  />
+                </>
+              ) : null}
 
               <div className={styles.gutter} aria-hidden />
             </div>
@@ -382,13 +430,13 @@ export function Book({
             <button
               type="button"
               className={`${styles.closedCover} grain`}
-              onClick={open}
+              onClick={openCover}
               aria-label="Open the Edition"
             />
           )}
         </div>
 
-        {opened ? (
+        {opened && !coverTurn ? (
           <>
             <button
               type="button"
