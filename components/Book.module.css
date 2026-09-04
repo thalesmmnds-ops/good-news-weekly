@@ -26,6 +26,20 @@
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* it's a book, not a text field — also keeps a drag-to-turn from starting
+   a text selection instead */
+.book,
+.book * {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.book img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
 /* hardcover boards, behind and a touch larger than the paper */
 .book::after {
   content: "";
