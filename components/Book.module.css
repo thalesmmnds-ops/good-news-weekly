@@ -16,6 +16,12 @@
   height: var(--page-h);
   perspective: 3200px;
   perspective-origin: 50% 34%;
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* closed: a single cover-width object, sitting shut until you open it */
+.sceneClosed {
+  width: var(--page-w);
 }
 
 /* one flat tilt — no nested 3D — so the book reads as an object on a desk */
@@ -116,6 +122,28 @@
     rgba(20, 14, 4, 0) 78%
   );
   filter: blur(18px);
+}
+
+/* ── the closed hardcover: plain board, no cover copy ──────────────────── */
+.closedCover {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(158deg, #332c24 0%, #221d17 55%, #17130f 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    inset 0 -8px 20px rgba(0, 0, 0, 0.45);
+  transition: filter 0.2s;
+}
+.closedCover:hover {
+  filter: brightness(1.1);
 }
 
 /* ── the open spread ──────────────────────────────────────────────────── */

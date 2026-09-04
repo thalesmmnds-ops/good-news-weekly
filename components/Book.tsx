@@ -50,6 +50,11 @@ export function Book({
   );
   const [turn, setTurnState] = useState<Turn>(null);
   const [reduced, setReduced] = useState(false);
+  // always starts shut, like picking up a physical book; a deep link still
+  // opens straight to the right spread once you tap it open
+  const [opened, setOpened] = useState(false);
+  const open = useCallback(() => setOpened(true), []);
+  const close = useCallback(() => setOpened(false), []);
 
   const bookRef = useRef<HTMLDivElement>(null);
   const turnApi = useRef<TurnHandle>(null);
@@ -140,8 +145,15 @@ export function Book({
   const beginTurn = useCallback(
     (dir: Dir): boolean => {
       if (busyRef.current || turnRef.current) return false;
-      if (dir === "next" && spread >= spreadCount - 1) return false;
-      if (dir === "prev" && spread <= 0) return false;
+      // keep going past either end and the book shuts, like a real one
+      if (dir === "next" && spread >= spreadCount - 1) {
+        close();
+        return false;
+      }
+      if (dir === "prev" && spread <= 0) {
+        close();
+        return false;
+      }
 
       if (reduced || (typeof document !== "undefined" && document.hidden)) {
         settle(dir === "next" ? spread + 1 : spread - 1);
@@ -153,7 +165,7 @@ export function Book({
       setTurn({ dir, s: spread });
       return true;
     },
-    [reduced, settle, setTurn, spread, spreadCount],
+    [close, reduced, settle, setTurn, spread, spreadCount],
   );
 
   const step = useCallback(
@@ -255,6 +267,13 @@ export function Book({
       if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable)) {
         return;
       }
+      if (!opened) {
+        if (["ArrowRight", "ArrowLeft", "PageDown", "PageUp", "Home", "End", " ", "Enter"].includes(e.key)) {
+          e.preventDefault();
+          open();
+        }
+        return;
+      }
       if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
         e.preventDefault();
         step("next");
@@ -271,7 +290,7 @@ export function Book({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [go, spreadCount, step]);
+  }, [go, open, opened, spreadCount, step]);
 
   // the book leans toward the pointer, so its depth reads as a solid object
   useEffect(() => {
@@ -315,71 +334,80 @@ export function Book({
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.scene}>
+      <div className={`${styles.scene}${opened ? "" : ` ${styles.sceneClosed}`}`}>
         <div className={styles.book} ref={bookRef}>
           <div className={styles.castShadow} aria-hidden />
-          <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden />
+          {opened ? <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden /> : null}
           <div className={`${styles.fore} ${styles.foreRight}`} aria-hidden />
           <div className={styles.deckle} aria-hidden />
 
-          <div className={styles.spread}>
-            <div className={`${styles.page} ${styles.left} grain`}>{left?.node}</div>
-            <div className={`${styles.page} ${styles.right} grain`}>{right?.node}</div>
+          {opened ? (
+            <div className={styles.spread}>
+              <div className={`${styles.page} ${styles.left} grain`}>{left?.node}</div>
+              <div className={`${styles.page} ${styles.right} grain`}>{right?.node}</div>
 
-            {turn ? (
-              <>
-                <div
-                  className={`${styles.incoming} ${
-                    turn.dir === "next" ? styles.incomingRight : styles.incomingLeft
-                  } grain`}
-                >
-                  {turn.dir === "next" ? page(s * 2 + 3) : page(s * 2 - 2)}
-                </div>
-                <TurnLeaf
-                  key={`${turn.dir}-${turn.s}`}
-                  ref={turnApi}
-                  dir={turn.dir}
-                  front={turn.dir === "next" ? page(s * 2 + 1) : page(s * 2)}
-                  back={turn.dir === "next" ? page(s * 2 + 2) : page(s * 2 - 1)}
-                />
-              </>
-            ) : null}
+              {turn ? (
+                <>
+                  <div
+                    className={`${styles.incoming} ${
+                      turn.dir === "next" ? styles.incomingRight : styles.incomingLeft
+                    } grain`}
+                  >
+                    {turn.dir === "next" ? page(s * 2 + 3) : page(s * 2 - 2)}
+                  </div>
+                  <TurnLeaf
+                    key={`${turn.dir}-${turn.s}`}
+                    ref={turnApi}
+                    dir={turn.dir}
+                    front={turn.dir === "next" ? page(s * 2 + 1) : page(s * 2)}
+                    back={turn.dir === "next" ? page(s * 2 + 2) : page(s * 2 - 1)}
+                  />
+                </>
+              ) : null}
 
-            <div
-              className={`${styles.dragZone} ${styles.dragZoneLeft}`}
-              style={{ pointerEvents: spread <= 0 ? "none" : "auto" }}
-              onPointerDown={onZonePointerDown("prev")}
-              aria-hidden
+              <div
+                className={`${styles.dragZone} ${styles.dragZoneLeft}`}
+                onPointerDown={onZonePointerDown("prev")}
+                aria-hidden
+              />
+              <div
+                className={`${styles.dragZone} ${styles.dragZoneRight}`}
+                onPointerDown={onZonePointerDown("next")}
+                aria-hidden
+              />
+
+              <div className={styles.gutter} aria-hidden />
+            </div>
+          ) : (
+            <button
+              type="button"
+              className={`${styles.closedCover} grain`}
+              onClick={open}
+              aria-label="Open the Edition"
             />
-            <div
-              className={`${styles.dragZone} ${styles.dragZoneRight}`}
-              style={{ pointerEvents: spread >= spreadCount - 1 ? "none" : "auto" }}
-              onPointerDown={onZonePointerDown("next")}
-              aria-hidden
-            />
-
-            <div className={styles.gutter} aria-hidden />
-          </div>
+          )}
         </div>
 
-        <button
-          type="button"
-          className={`${styles.arrow} ${styles.arrowPrev}`}
-          aria-label="Previous pages"
-          disabled={spread <= 0}
-          onClick={() => step("prev")}
-        >
-          &lsaquo;
-        </button>
-        <button
-          type="button"
-          className={`${styles.arrow} ${styles.arrowNext}`}
-          aria-label="Next pages"
-          disabled={spread >= spreadCount - 1}
-          onClick={() => step("next")}
-        >
-          &rsaquo;
-        </button>
+        {opened ? (
+          <>
+            <button
+              type="button"
+              className={`${styles.arrow} ${styles.arrowPrev}`}
+              aria-label={spread <= 0 ? "Close the Edition" : "Previous pages"}
+              onClick={() => step("prev")}
+            >
+              &lsaquo;
+            </button>
+            <button
+              type="button"
+              className={`${styles.arrow} ${styles.arrowNext}`}
+              aria-label={spread >= spreadCount - 1 ? "Close the Edition" : "Next pages"}
+              onClick={() => step("next")}
+            >
+              &rsaquo;
+            </button>
+          </>
+        ) : null}
       </div>
     </div>
   );
