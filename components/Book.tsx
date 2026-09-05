@@ -8,7 +8,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 
-import { clamp, isSettled, stepSpring, type Spring } from "@/lib/pageCurl";
+import { clamp, COVER_SPRING, isSettled, stepSpring, type Spring } from "@/lib/pageCurl";
 
 import { TurnLeaf, type TurnHandle } from "./TurnLeaf";
 import styles from "./Book.module.css";
@@ -22,10 +22,12 @@ const LEAN_REST_X = 11;
 const LEAN_MAX_X = 4;
 const LEAN_MAX_Y = 3.5;
 const DRAG_SPAN = 0.68; // fraction of a page's width that spans a full drag turn
-// the cover only needs to swing to edge-on (90°, half of TurnLeaf's 180°
-// range) to clear the spread -- at that angle it's foreshortened to a
-// sliver, so handing off to the flat static spread underneath is seamless
-const COVER_SWING = 0.5;
+// the cover only needs to swing clear of the spread, not flip all the way
+// over like an interior leaf joining the opposite stack -- it settles a
+// little past edge-on (rather than exactly at 90°, which can shimmer right
+// at the knife-edge) showing a sliver of endpaper before the static spread
+// underneath takes over
+const COVER_SWING = 0.56;
 
 type Dir = "next" | "prev";
 type Turn = { dir: Dir; s: number; kind?: "cover" } | null;
@@ -131,11 +133,12 @@ export function Book({
       lastRef.current = now;
       const s = springRef.current;
       const target = targetRef.current;
-      stepSpring(s, target, dt);
+      const isCover = turnRef.current?.kind === "cover";
+      stepSpring(s, target, dt, isCover ? COVER_SPRING : undefined);
       // the cover only needs to swing clear of the spread, not flip all the
       // way over like an interior leaf joining the opposite stack — capping
       // its travel keeps it from sweeping across into the other page
-      const scale = turnRef.current?.kind === "cover" ? COVER_SWING : 1;
+      const scale = isCover ? COVER_SWING : 1;
       turnApi.current?.apply(s.t * scale);
       if (isSettled(s, target) || now - startedAt > 2500) {
         turnApi.current?.apply(target * scale);
@@ -434,7 +437,7 @@ export function Book({
                 ref={turnApi}
                 dir="next"
                 front={<div className={styles.coverFace} />}
-                back={<div className={styles.coverFace} />}
+                back={<div className={styles.coverBack} />}
               />
             ) : null}
 
@@ -462,7 +465,7 @@ export function Book({
               />
             ) : null}
 
-            <div className={styles.gutter} aria-hidden />
+            {!turn ? <div className={styles.gutter} aria-hidden /> : null}
           </div>
         </div>
 

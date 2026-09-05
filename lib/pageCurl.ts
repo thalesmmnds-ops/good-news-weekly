@@ -84,9 +84,11 @@ export function curlFrame(t: number, bow: number, n: number = CURL_STRIPS): Curl
 
 export type Spring = { t: number; v: number };
 
-const K = 168; // stiffness
-const C = 19; // damping — a touch below critical, so the page slaps down
-const G = 30; // "gravity": helps the leaf over the unstable middle of the turn
+/** A sheet of paper: light, so it snaps over quickly. */
+export const PAGE_SPRING = { k: 168, c: 19, g: 30 };
+/** A hardcover board: heavier and stiffer, so it swings more slowly and
+ *  deliberately than a single leaf — it takes real weight to lift. */
+export const COVER_SPRING = { k: 95, c: 19, g: 16 };
 
 /**
  * Advance the spring one step toward `target` (0 or 1). Beyond the plain
@@ -96,11 +98,16 @@ const G = 30; // "gravity": helps the leaf over the unstable middle of the turn
  * falls the rest of the way. It vanishes at the target, so the spring settles
  * cleanly.
  */
-export function stepSpring(s: Spring, target: 0 | 1, dt: number): void {
+export function stepSpring(
+  s: Spring,
+  target: 0 | 1,
+  dt: number,
+  { k, c, g }: { k: number; c: number; g: number } = PAGE_SPRING,
+): void {
   const x = s.t - target;
   const hump = 4 * s.t * (1 - s.t); // 0 at both ends, 1 at t = 0.5
-  const weight = (target === 1 ? G : -G) * Math.max(0, hump);
-  const a = -K * x - C * s.v + weight;
+  const weight = (target === 1 ? g : -g) * Math.max(0, hump);
+  const a = -k * x - c * s.v + weight;
   s.v += a * dt;
   s.t += s.v * dt;
 }
