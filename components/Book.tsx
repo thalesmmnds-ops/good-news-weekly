@@ -161,7 +161,12 @@ export function Book({
   const beginCover = useCallback(
     (to: 0 | 1) => {
       if (busyRef.current || turnRef.current) return;
-      if (reduced || (typeof document !== "undefined" && document.hidden)) {
+      // note: no document.hidden check here -- a click/keypress can only
+      // land on a tab that has focus, so "hidden" at that moment is almost
+      // always a false positive (e.g. a screen recorder briefly occluding
+      // the window), and skipping the animation on that signal is exactly
+      // what made opening feel instant while closing animated normally
+      if (reduced) {
         setOpened(to === 1);
         if (to === 0) settle(0);
         return;
@@ -192,7 +197,12 @@ export function Book({
         return false;
       }
 
-      if (reduced || (typeof document !== "undefined" && document.hidden)) {
+      // note: no document.hidden check here -- a click/keypress can only
+      // land on a tab that has focus, so "hidden" at that moment is almost
+      // always a false positive (e.g. a screen recorder briefly occluding
+      // the window), and skipping the animation on that signal is exactly
+      // what made opening feel instant while closing animated normally
+      if (reduced) {
         settle(dir === "next" ? spread + 1 : spread - 1);
         return false;
       }
