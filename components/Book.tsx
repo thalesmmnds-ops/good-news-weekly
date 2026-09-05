@@ -486,6 +486,17 @@ export function Book({
             </button>
           </>
         ) : null}
+
+        {restingClosed ? (
+          <button
+            type="button"
+            className={`${styles.arrow} ${styles.arrowNext}`}
+            aria-label="Open the Edition"
+            onClick={openCover}
+          >
+            &rsaquo;
+          </button>
+        ) : null}
       </div>
     </div>
   );
