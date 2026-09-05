@@ -128,7 +128,9 @@
 /* ── the closed hardcover: plain board, no cover copy ──────────────────── */
 .closedCover {
   position: absolute;
-  inset: 0;
+  /* reaches past the page-block/fore-edge/deckle pseudo-elements behind it
+     so none of their pale edges peek out around a fully-black cover */
+  inset: -2px -10px -14px -10px;
   z-index: 10;
   margin: 0;
   border: 0;
