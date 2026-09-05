@@ -82,6 +82,39 @@ export function curlFrame(t: number, bow: number, n: number = CURL_STRIPS): Curl
   return { tt: start, shade, strips };
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   A lighter read on the same idea, for the flat leaf: it does not draw
+   strips, it just reports how much the sheet is bowing right now and how
+   edge-on it is, so the leaf can shade and curl its free edge without any
+   extra 3D geometry.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const BOW_MAX = 0.9; // total bow across the sheet at mid-turn, radians (~51°)
+
+export type Bend = {
+  /** mean rotation of the sheet about the spine, degrees (0 flat, 180 turned) */
+  swingDeg: number;
+  /** total bow across the sheet right now, radians */
+  bow: number;
+  /** 0..1, how edge-on the sheet is — peaks at the half-turn */
+  shade: number;
+};
+
+/**
+ * @param p    progress of the turn, 0..1 (drives the swing)
+ * @param lag  a slightly lagged progress (drives the bow), so the sheet keeps
+ *             flexing for a few frames after the spine edge has stopped moving
+ */
+export function pageBend(p: number, lag: number = p): Bend {
+  const q = clamp01(p);
+  const swing = Math.PI * q;
+  return {
+    swingDeg: q * 180,
+    bow: BOW_MAX * Math.sin(Math.PI * clamp01(lag)),
+    shade: Math.sin(swing),
+  };
+}
+
 export type Spring = { t: number; v: number };
 
 /** A sheet of paper: light, so it snaps over quickly. */

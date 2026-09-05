@@ -386,6 +386,13 @@ export function Book({
       if (!turnRef.current) setTurn({ dir: "next", s: spread, kind: "cover" });
       window.setTimeout(() => turnApi.current?.apply(p * COVER_SWING), 60);
     };
+    (window as unknown as { __gnwOpen?: () => void }).__gnwOpen = () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+      busyRef.current = false;
+      setTurn(null);
+      setOpened(true);
+    };
   }, [setTurn, spread]);
 
   const s = turn ? turn.s : spread;
@@ -436,6 +443,7 @@ export function Book({
                 key="cover"
                 ref={turnApi}
                 dir="next"
+                rigid
                 front={<div className={styles.coverFace} />}
                 back={<div className={styles.coverBack} />}
               />
