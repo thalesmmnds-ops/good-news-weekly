@@ -138,6 +138,10 @@ export const TurnLeaf = forwardRef<
         aria-hidden
       >
         {tree}
+        {/* a constant darkening along the hinge edge: rides with the leaf, so
+            when it lands flat it sits exactly where the static page's spine
+            shadow will be — the handoff has nothing to pop in */}
+        <div className={styles.spine} />
       </div>
     </>
   );

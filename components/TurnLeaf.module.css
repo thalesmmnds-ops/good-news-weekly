@@ -39,6 +39,33 @@
   transform: rotateY(var(--tt, 0deg));
 }
 
+/* the spine valley, carried by the leaf itself — constant strength, rotates
+   with the sheet, so when it lands flat it lines up with the static page's
+   own spine shadow and there is nothing to fade in afterward */
+.spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--page-w, 0px) * 0.09);
+  pointer-events: none;
+}
+.curlNext .spine {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(40, 28, 10, 0.42) 0%,
+    rgba(40, 28, 10, 0) 92%
+  );
+}
+.curlPrev .spine {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(40, 28, 10, 0.42) 0%,
+    rgba(40, 28, 10, 0) 92%
+  );
+}
+
 .strip {
   position: absolute;
   top: 0;
