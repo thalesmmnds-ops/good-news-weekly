@@ -70,8 +70,8 @@
    thickness, so the lines are vertical and fine */
 .fore {
   position: absolute;
-  top: 1.5%;
-  bottom: 1.5%;
+  top: 0;
+  bottom: 0;
   width: 8px;
   z-index: -1;
   background: repeating-linear-gradient(
