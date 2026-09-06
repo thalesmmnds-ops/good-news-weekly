@@ -65,7 +65,9 @@
     inset -2px 0 1px rgba(58, 44, 26, 0.12);
 }
 
-/* fore-edges: the stacked page ends you see along the outer sides */
+/* fore-edges: the stacked page ends you see along the outer sides —
+   each page is a full-height sliver, and the stack runs across the book's
+   thickness, so the lines are vertical and fine */
 .fore {
   position: absolute;
   top: 1.5%;
@@ -73,9 +75,9 @@
   width: 8px;
   z-index: -1;
   background: repeating-linear-gradient(
-    0deg,
-    rgba(58, 44, 26, 0.2) 0 1px,
-    rgba(245, 239, 225, 0.96) 1px 2.6px
+    90deg,
+    rgba(58, 44, 26, 0.14) 0 0.5px,
+    rgba(245, 239, 225, 0.92) 0.5px 1.7px
   );
 }
 .foreLeft {
