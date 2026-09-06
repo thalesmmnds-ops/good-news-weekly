@@ -1,24 +1,3 @@
-/* ── the hardcover board: one flat, stiff plane (rigid path) ──────────── */
-.leaf {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 50%;
-  z-index: 30;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-.leafNext {
-  left: 50%;
-  transform-origin: left center;
-  transform: rotateY(var(--rot, 0deg));
-}
-.leafPrev {
-  left: 0;
-  transform-origin: right center;
-  transform: rotateY(var(--rot, 0deg));
-}
-
 .face {
   position: absolute;
   top: 0;
@@ -37,34 +16,6 @@
 }
 .back {
   transform: rotateY(180deg);
-}
-
-/* rigid faces: the spine edge shadow matches .page's own so nothing pops */
-.leafNext .front,
-.leafPrev .back {
-  box-shadow:
-    inset 30px 0 40px -34px rgba(40, 28, 10, 0.5),
-    inset 0 0 70px rgba(40, 28, 10, 0.05);
-}
-.leafNext .back,
-.leafPrev .front {
-  box-shadow:
-    inset -30px 0 40px -34px rgba(40, 28, 10, 0.5),
-    inset 0 0 70px rgba(40, 28, 10, 0.05);
-}
-
-.sheen {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: var(--sheen, 0);
-  background: linear-gradient(
-    108deg,
-    rgba(255, 250, 238, 0.5) 0%,
-    rgba(255, 250, 238, 0) 28%,
-    rgba(40, 28, 10, 0.12) 74%,
-    rgba(40, 28, 10, 0.3) 100%
-  );
 }
 
 /* ── a paper leaf: a chain of nested strips forming a curved surface ───── */

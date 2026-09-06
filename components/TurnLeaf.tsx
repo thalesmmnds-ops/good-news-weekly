@@ -21,11 +21,10 @@ const N = 18; // strips — enough for the arc to read as a curve, not a fan
 /**
  * One sheet flipping about the spine.
  *
- * A paper leaf is a chain of `N` nested strips whose rotations accumulate
- * into an arc, so the sheet bends the way paper bends instead of pivoting
- * like a flat door. Each strip carries its own clipped slice of the page
- * markup, lit from its real facing angle. `rigid` drops all of that for the
- * hardcover board, which stays one stiff plane.
+ * The leaf is a chain of `N` nested strips whose rotations accumulate into
+ * an arc, so the sheet bends the way paper bends instead of pivoting like a
+ * flat door. Each strip carries its own clipped slice of the page markup,
+ * lit from its real facing angle.
  *
  * `dir` "next" flips the right page left (hinge at the gutter); "prev" flips
  * the left page right. The parent owns the clock and pushes progress in
@@ -33,11 +32,10 @@ const N = 18; // strips — enough for the arc to read as a curve, not a fan
  */
 export const TurnLeaf = forwardRef<
   TurnHandle,
-  { dir: "next" | "prev"; front: ReactNode; back: ReactNode; rigid?: boolean }
->(function TurnLeaf({ dir, front, back, rigid = false }, ref) {
+  { dir: "next" | "prev"; front: ReactNode; back: ReactNode }
+>(function TurnLeaf({ dir, front, back }, ref) {
   const rootRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<(HTMLDivElement | null)[]>([]);
-  const sheenRef = useRef<HTMLDivElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
   const capFront = useRef<HTMLDivElement>(null);
   const capBack = useRef<HTMLDivElement>(null);
@@ -46,29 +44,17 @@ export const TurnLeaf = forwardRef<
   // lift the page markup out of the hidden copies and into every strip's
   // clipped slice — runs before paint, so there is no blank first frame
   useLayoutEffect(() => {
-    if (rigid) return;
     setHtml({
       f: capFront.current?.innerHTML ?? "",
       b: capBack.current?.innerHTML ?? "",
     });
-  }, [rigid]);
+  }, []);
 
   useImperativeHandle(
     ref,
     (): TurnHandle => ({
       apply(progress) {
         const p = clamp01(progress);
-
-        if (rigid) {
-          const deg = (dir === "next" ? -180 : 180) * p;
-          rootRef.current?.style.setProperty("--rot", `${deg.toFixed(2)}deg`);
-          const arc = Math.sin(Math.PI * p);
-          sheenRef.current?.style.setProperty("--sheen", (arc * 0.5).toFixed(3));
-          const cast = arc * Math.max(0, 1 - p * 1.9);
-          shadowRef.current?.style.setProperty("--sh", (cast * 0.6).toFixed(3));
-          return;
-        }
-
         const { ttDeg, tdDeg, shade, lit } = curlNums(p, N);
         const el = rootRef.current;
         if (el) {
@@ -77,49 +63,20 @@ export const TurnLeaf = forwardRef<
           el.style.setProperty("--shade", shade.toFixed(3));
         }
         for (let i = 0; i < N; i += 1) {
-          const s = stripRef.current[i];
-          if (!s) continue;
-          s.style.setProperty("--lit", lit[i].toFixed(3));
-          s.style.setProperty("--a1", ((1 - lit[i]) * 0.62).toFixed(3));
-          s.style.setProperty("--a2", ((1 - lit[i + 1]) * 0.62).toFixed(3));
+          const strip = stripRef.current[i];
+          if (!strip) continue;
+          strip.style.setProperty("--lit", lit[i].toFixed(3));
+          strip.style.setProperty("--a1", ((1 - lit[i]) * 0.62).toFixed(3));
+          strip.style.setProperty("--a2", ((1 - lit[i + 1]) * 0.62).toFixed(3));
         }
         // the leaf's own shadow on the spread beneath it — present the whole
         // turn, strongest when the sheet stands most upright
         shadowRef.current?.style.setProperty("--sh", (shade * 0.5).toFixed(3));
       },
     }),
-    [dir, rigid],
+    [],
   );
 
-  // ── the hardcover board: one flat, stiff plane ──────────────────────────
-  if (rigid) {
-    return (
-      <>
-        <div
-          ref={shadowRef}
-          className={`${styles.shadow} ${
-            dir === "next" ? styles.shadowNext : styles.shadowPrev
-          }`}
-          aria-hidden
-        />
-        <div
-          ref={rootRef}
-          className={`${styles.leaf} ${
-            dir === "next" ? styles.leafNext : styles.leafPrev
-          }`}
-          aria-hidden
-        >
-          <div className={`${styles.face} ${styles.front} grain`}>
-            {front}
-            <div ref={sheenRef} className={styles.sheen} />
-          </div>
-          <div className={`${styles.face} ${styles.back} grain`}>{back}</div>
-        </div>
-      </>
-    );
-  }
-
-  // ── a paper leaf: nested strips forming a curved surface ────────────────
   let tree: ReactNode = null;
   for (let i = N - 1; i >= 0; i -= 1) {
     const inner = tree;

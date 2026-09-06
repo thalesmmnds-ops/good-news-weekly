@@ -127,9 +127,6 @@ export type Spring = { t: number; v: number };
 
 /** A sheet of paper: light, so it snaps over quickly. */
 export const PAGE_SPRING = { k: 168, c: 19, g: 30 };
-/** A hardcover board: heavier and stiffer, so it swings more slowly and
- *  deliberately than a single leaf — it takes real weight to lift. */
-export const COVER_SPRING = { k: 95, c: 19, g: 16 };
 
 /**
  * Advance the spring one step toward `target` (0 or 1). Beyond the plain
