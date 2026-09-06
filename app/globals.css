@@ -52,6 +52,8 @@ body {
   text-rendering: optimizeLegibility;
   background-color: var(--desk);
   background-image:
+    /* soft amber glow behind everything, warmest at the centre */
+    radial-gradient(95% 80% at 50% 40%, rgba(255, 198, 84, 0.62), rgba(255, 198, 84, 0.12) 62%, rgba(255, 198, 84, 0) 82%),
     radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.16), transparent 60%),
     radial-gradient(140% 120% at 50% 120%, rgba(0, 0, 0, 0.24), transparent 55%),
     linear-gradient(180deg, var(--desk) 0%, var(--desk-2) 100%);
