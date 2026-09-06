@@ -83,36 +83,44 @@ export function curlFrame(t: number, bow: number, n: number = CURL_STRIPS): Curl
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   A lighter read on the same idea, for the flat leaf: it does not draw
-   strips, it just reports how much the sheet is bowing right now and how
-   edge-on it is, so the leaf can shade and curl its free edge without any
-   extra 3D geometry.
+   The per-frame numbers for the nested-strip leaf. Only two of these ever
+   go to the DOM as geometry — the spine strip's angle and the constant
+   step between strips — because the strips are nested, so CSS accumulates
+   the arc for us. Everything else is the per-strip lighting.
    ───────────────────────────────────────────────────────────────────────── */
 
-const BOW_MAX = 0.9; // total bow across the sheet at mid-turn, radians (~51°)
+const CURL_BETA = 0.6; // half the total bend across the sheet at mid-turn, rad
 
-export type Bend = {
-  /** mean rotation of the sheet about the spine, degrees (0 flat, 180 turned) */
-  swingDeg: number;
-  /** total bow across the sheet right now, radians */
-  bow: number;
+export type CurlNums = {
+  /** the spine strip's rotation, degrees (the whole chain's base angle) */
+  ttDeg: number;
+  /** the constant extra rotation each strip adds over its parent, degrees */
+  tdDeg: number;
   /** 0..1, how edge-on the sheet is — peaks at the half-turn */
   shade: number;
+  /** |cos(facing)| at every strip boundary, length n + 1 (0 = spine) */
+  lit: number[];
 };
 
 /**
- * @param p    progress of the turn, 0..1 (drives the swing)
- * @param lag  a slightly lagged progress (drives the bow), so the sheet keeps
- *             flexing for a few frames after the spine edge has stopped moving
+ * @param t  progress of the turn, 0..1
+ * @param n  strip count
+ *
+ * The sheet swings about its spine by `th = π·t`. Across its width it also
+ * bows by `2·beta`, centred on that swing, and `beta` is zero at both ends
+ * so the page lies flat when down and flat when fully turned, bowing most
+ * at the halfway point.
  */
-export function pageBend(p: number, lag: number = p): Bend {
-  const q = clamp01(p);
-  const swing = Math.PI * q;
-  return {
-    swingDeg: q * 180,
-    bow: BOW_MAX * Math.sin(Math.PI * clamp01(lag)),
-    shade: Math.sin(swing),
-  };
+export function curlNums(t: number, n: number): CurlNums {
+  const p = clamp01(t);
+  const th = Math.PI * p;
+  const beta = CURL_BETA * Math.sin(Math.PI * p);
+  const tt = th + beta; // spine strip faces here
+  const td = (2 * beta) / n; // and each strip walks back toward th - beta
+  const D = 180 / Math.PI;
+  const lit: number[] = new Array(n + 1);
+  for (let i = 0; i <= n; i++) lit[i] = Math.abs(Math.cos(tt - i * td));
+  return { ttDeg: tt * D, tdDeg: td * D, shade: Math.sin(th), lit };
 }
 
 export type Spring = { t: number; v: number };

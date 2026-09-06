@@ -176,6 +176,11 @@
   position: absolute;
   inset: 0;
   display: flex;
+  /* a 3D context scoped to the spread — enough for the turning leaf's
+     nested strips to foreshorten without putting the whole book in 3D */
+  perspective: 1800px;
+  perspective-origin: 50% 42%;
+  transform-style: preserve-3d;
 }
 
 .page {
