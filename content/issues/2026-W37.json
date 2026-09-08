@@ -1,0 +1,142 @@
+{
+  "number": 2,
+  "volume": 1,
+  "weekOf": "2026-09-07",
+  "published": "2026-09-11",
+  "sampler": true,
+  "stories": [
+    {
+      "rank": 1,
+      "category": "science",
+      "headline": "London's clean-air zone is showing up in children's lungs",
+      "dek": "After the Ultra Low Emission Zone took effect, the lung growth of London schoolchildren caught up with peers in a less-polluted town.",
+      "summary": "The CHILL study tracked the lungs of more than 3,400 children aged six to nine across London and Luton from 2018 to 2022, testing them each year. London's children began with measurably smaller lungs, but after the Ultra Low Emission Zone took effect and roadside nitrogen dioxide fell, their lung growth sped up until it matched the Luton group. The results appeared in The Lancet Public Health.",
+      "whyItMatters": "It is rare, hard evidence that a single traffic policy can change how children's bodies develop.",
+      "source": {
+        "name": "Queen Mary University of London",
+        "url": "https://www.qmul.ac.uk/news/latest-news/2026/queen-mary-news/pr/introduction-of-londons-ultra-low-emission-zone-linked-to-improved-lung-growth-in-children--.html",
+        "date": "2026-08-19",
+        "via": "Positive News"
+      }
+    },
+    {
+      "rank": 2,
+      "category": "health",
+      "headline": "An arthritis pill regrew scalp hair in about half of people with severe alopecia areata",
+      "dek": "In two Phase 3 trials, daily upadacitinib brought many patients back to most of their hair over 24 weeks.",
+      "summary": "Two Phase 3 randomized trials enrolled 1,399 people aged 12 to 64 with severe alopecia areata, each missing at least half their scalp hair. Over 24 weeks, 45 to 55 percent of those taking daily upadacitinib, a JAK inhibitor already used for arthritis, reached 80 percent scalp coverage, against a few percent on placebo; between 13 and 22 percent regrew nearly all of it. The results were published in JAMA Dermatology.",
+      "whyItMatters": "Alopecia areata has had very few effective treatments, and an oral option that also works for adolescents widens the field.",
+      "source": {
+        "name": "ScienceAlert",
+        "url": "https://www.sciencealert.com/arthritis-drug-restores-up-to-100-of-hair-in-patients-with-severe-alopecia",
+        "date": "2026-09-06"
+      }
+    },
+    {
+      "rank": 3,
+      "category": "health",
+      "headline": "A one-year-old is the first to get a new kind of spring to reshape his skull",
+      "dek": "Nitinol springs, custom-made and more flexible than the steel ones used for two decades, treated a baby's severe craniosynostosis.",
+      "summary": "Rory Potter, of Chesterfield, England, was born with severe sagittal craniosynostosis, in which the skull fuses before birth. At Great Ormond Street Hospital he became the first child fitted with reshaping springs made of nitinol, a flexible nickel-titanium alloy developed with University College London. Custom-shaped and more adjustable than the steel springs used for twenty years, they went in during a 45-minute operation and were later removed. A year on, he is doing well.",
+      "whyItMatters": "The more flexible springs can spare some children a longer, more invasive skull operation.",
+      "source": {
+        "name": "BBC News",
+        "url": "https://www.bbc.com/news/articles/c1wxp8r9wnwo",
+        "date": "2026-09-07"
+      }
+    },
+    {
+      "rank": 4,
+      "category": "conservation",
+      "headline": "Probiotics helped heat-stressed Red Sea coral hold its colour through a marine heatwave",
+      "dek": "A KAUST team dosed wild Acropora with beneficial bacteria during a 2022 heatwave and tracked its recovery.",
+      "summary": "Researchers at KAUST in Saudi Arabia took helpful bacteria from healthy Red Sea corals and applied them, live and as an inactivated “postbiotic”, to heat-stressed Acropora colonies in the central Red Sea during a 2022 marine heatwave. After 15 days, corals given the best formulas held more of their colour and photosynthetic activity than untreated ones. The work was published in Cell Reports.",
+      "whyItMatters": "A postbiotic that survives storage could be applied to reefs at scale, unlike fragile live cultures.",
+      "source": {
+        "name": "Good News Network",
+        "url": "https://www.goodnewsnetwork.org/red-sea-coral-dying-from-heat-stress-is-being-revived-using-probiotics/",
+        "date": "2026-09-01"
+      }
+    },
+    {
+      "rank": 5,
+      "category": "conservation",
+      "headline": "He let 70 acres of his barley farm become marsh again, and the birds came back",
+      "dek": "Karl Wenner turned flood-prone cropland near Klamath Falls into managed wetland that now shelters endangered fish and about 140 bird species.",
+      "summary": "Karl Wenner, co-owner of Lakeside Farms in Oregon's Klamath Basin, turned roughly 70 acres of his 400-acre barley farm into managed wetland in 2021, after finding the water he pumped off the land was carrying far too much phosphorus into a nearby lake. The wetland now draws about 140 bird species and tens of thousands of waterfowl, and has been used to rear the federally endangered Lost River and shortnose sucker.",
+      "whyItMatters": "The Klamath Basin's water is fought over hard, and this shows farmland can be handed back to wildlife without a court order.",
+      "source": {
+        "name": "Jefferson Public Radio",
+        "url": "https://www.ijpr.org/environment-energy-and-transportation/2022-05-11/endangered-fish-and-waterfowl-find-refuge-at-the-klamath-basins-lakeside-farms",
+        "date": "2022-05-11",
+        "via": "The Times of India"
+      }
+    },
+    {
+      "rank": 6,
+      "category": "conservation",
+      "headline": "A Texas farm bought in 1911 is now protected for good, by the family's fourth generation",
+      "dek": "Descendants of Joseph Martinek placed a permanent conservation easement on 470 acres near La Grange.",
+      "summary": "Joseph Martinek bought farmland outside La Grange, Texas, in 1911. His great-grandchildren, siblings Russell Friemel and Ardie Friemel Holsinger, began the process in 2021 and in 2026 completed a donated conservation easement with the Texas Land Conservancy, permanently protecting all 470 acres of cropland, wildlife habitat and open space while the family keeps ownership and keeps farming it.",
+      "whyItMatters": "Working farms rarely stay whole across four generations, let alone get locked in against future subdivision.",
+      "source": {
+        "name": "Texas Land Conservancy",
+        "url": "https://www.texaslandconservancy.org/tlc-stories/470-acres-of-colorado-basin-protected-forever",
+        "date": "2026-06-15",
+        "via": "The Times of India"
+      }
+    },
+    {
+      "rank": 7,
+      "category": "discovery",
+      "headline": "A student's biodegradable plastic that digests microplastics as it breaks down",
+      "dek": "Arya Satheesh's material releases enzymes while decomposing, targeting fragments of PET plastic.",
+      "summary": "Arya Satheesh, a secondary-school student in Letterkenny, Ireland, made Eco Purge: a biodegradable plastic that releases plastic-digesting enzymes as it breaks down, targeting microplastics from PET. She sourced the enzymes with help from a researcher at Ireland's national bioeconomy centre and took the European title at the 2026 Earth Prize. For now it works best in controlled settings such as compost facilities.",
+      "whyItMatters": "Under a tenth of plastic is recycled, so a material that helps clear the fragments left behind is a different angle on the problem.",
+      "source": {
+        "name": "Goodnet",
+        "url": "https://www.goodnet.org/people/high-schooler-invents-a-plastic-that-eats-microplastics/",
+        "date": "2026-05-20"
+      }
+    },
+    {
+      "rank": 8,
+      "category": "health",
+      "headline": "She became a barre instructor, and her first class filled with 60 people",
+      "dek": "Aubry Allbridge, who has Down syndrome, earned her certification and now leads a regular fitness class in Kaysville, Utah.",
+      "summary": "Aubry Allbridge, 22, spent months taking barre classes at a VASA Fitness gym in Kaysville, Utah, where an instructor noticed how fast she learned and remembered the choreography. Allbridge trained for and passed the UpBeat Barre certification; about 60 people came to the first class she led. The gym is working to turn it into a paid role.",
+      "whyItMatters": "Certified instructors with Down syndrome are still rare, and her class is now part of the regular schedule.",
+      "source": {
+        "name": "Good News Network",
+        "url": "https://www.goodnewsnetwork.org/22-yo-with-down-syndrome-becomes-certified-fitness-instructor-leads-class-of-60-at-local-gym/",
+        "date": "2026-09-02"
+      }
+    },
+    {
+      "rank": 9,
+      "category": "health",
+      "headline": "An outdoor gym in a Paris shelter courtyard, and what a month of it changed",
+      "dek": "A one-month pilot put fitness equipment in a homeless shelter's yard; most users reported better health and more social contact.",
+      "summary": "The equipment maker Omnigym and the French charity Emmaüs Solidarité installed an open-air gym in the courtyard of a Paris homeless shelter and ran it for a month with anonymous surveys. Among residents who used it, roughly 80 percent reported better physical health and 90 percent said it helped them connect with other people; some reported smoking less.",
+      "whyItMatters": "Shelters rarely have room for exercise, and the social effect mattered to users as much as the physical one.",
+      "source": {
+        "name": "Good News Network",
+        "url": "https://www.goodnewsnetwork.org/new-gym-in-paris-helps-homeless-improve-their-health-and-habits/",
+        "date": "2026-09-05"
+      }
+    },
+    {
+      "rank": 10,
+      "category": "health",
+      "headline": "Every morning she reads affirmations from her porch, and the neighbourhood listens",
+      "dek": "Maureen Fitzgerald, 63, has turned her front step into a daily source of encouragement for anyone walking past.",
+      "summary": "Maureen Fitzgerald sits on her porch each morning with a coffee and reads out affirmations and words of encouragement for her neighbours and passers-by. What began as a private habit has become something her street looks for: a brief, reliable moment of warmth to start the day.",
+      "whyItMatters": "Small public rituals like this cost nothing and give a street a shared point of calm.",
+      "source": {
+        "name": "TODAY",
+        "url": "https://www.today.com/food/people/maureen-fitzgerald-morning-coffee-affirmations-rcna594567",
+        "date": "2026-09-05"
+      }
+    }
+  ]
+}
