@@ -227,3 +227,39 @@
   font-size: 0.66rem;
   font-weight: 500;
 }
+
+/* ── phones: story type ~25% smaller, so more of each article shows and
+      the source link + folio clear the page ────────────────────────────── */
+@media (max-width: 720px) {
+  .rank {
+    font-size: calc(var(--page-w) * 0.084);
+  }
+  .kicker.caps {
+    font-size: max(10px, calc(var(--page-w) * 0.024));
+  }
+  .headline {
+    font-size: max(12px, calc(var(--page-w) * 0.036));
+  }
+  .dek {
+    font-size: max(10px, calc(var(--page-w) * 0.024));
+  }
+  .plateCap {
+    font-size: max(7px, calc(var(--page-w) * 0.018));
+  }
+  .body {
+    font-size: max(9px, calc(var(--page-w) * 0.024));
+  }
+  .foot {
+    font-size: max(8px, calc(var(--page-w) * 0.018));
+  }
+  /* colophon column too */
+  .colTitle {
+    font-size: max(15px, calc(var(--page-w) * 0.049));
+  }
+  .pledge {
+    font-size: max(11px, calc(var(--page-w) * 0.033));
+  }
+  .colBody {
+    font-size: max(9px, calc(var(--page-w) * 0.026));
+  }
+}
