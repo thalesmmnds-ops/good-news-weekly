@@ -181,3 +181,23 @@
   right: 50%;
   background: linear-gradient(270deg, rgba(28, 19, 7, 0.55), rgba(28, 19, 7, 0) 82%);
 }
+
+/* ── phones: shed per-strip cost the tiny page can't show anyway ──────── */
+@media (max-width: 720px) {
+  /* the specular highlight is invisible at this size — drop the 2·N
+     animated-opacity overlays */
+  .gl {
+    display: none;
+  }
+  /* one un-blurred, pre-softened cast shadow instead of a live blur filter */
+  .shadow {
+    filter: none;
+    width: 52%;
+  }
+  .shadowNext {
+    background: linear-gradient(90deg, rgba(28, 19, 7, 0.4), rgba(28, 19, 7, 0) 96%);
+  }
+  .shadowPrev {
+    background: linear-gradient(270deg, rgba(28, 19, 7, 0.4), rgba(28, 19, 7, 0) 96%);
+  }
+}

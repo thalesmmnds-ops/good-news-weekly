@@ -16,7 +16,17 @@ import styles from "./TurnLeaf.module.css";
 export type TurnHandle = { apply: (progress: number) => void };
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
-const N = 18; // strips — enough for the arc to read as a curve, not a fan
+// strips forming the arc: 18 reads as a smooth curve on a full-size page;
+// a phone's page is a fraction of the width, so half as many still reads
+// clean and roughly halves the per-frame style work and the DOM
+const STRIPS_DESKTOP = 18;
+const STRIPS_MOBILE = 9;
+function stripCount(): number {
+  if (typeof window === "undefined") return STRIPS_DESKTOP;
+  return window.matchMedia("(max-width: 720px)").matches
+    ? STRIPS_MOBILE
+    : STRIPS_DESKTOP;
+}
 
 /**
  * One sheet flipping about the spine.
@@ -40,6 +50,8 @@ export const TurnLeaf = forwardRef<
   const capFront = useRef<HTMLDivElement>(null);
   const capBack = useRef<HTMLDivElement>(null);
   const [html, setHtml] = useState<{ f: string; b: string } | null>(null);
+  // read once per turn (the leaf remounts each turn, so it re-checks)
+  const n = useRef(stripCount()).current;
 
   // lift the page markup out of the hidden copies and into every strip's
   // clipped slice — runs before paint, so there is no blank first frame
@@ -55,14 +67,14 @@ export const TurnLeaf = forwardRef<
     (): TurnHandle => ({
       apply(progress) {
         const p = clamp01(progress);
-        const { ttDeg, tdDeg, shade, lit } = curlNums(p, N);
+        const { ttDeg, tdDeg, shade, lit } = curlNums(p, n);
         const el = rootRef.current;
         if (el) {
           el.style.setProperty("--tt", `${ttDeg.toFixed(2)}deg`);
           el.style.setProperty("--td", `${tdDeg.toFixed(3)}deg`);
           el.style.setProperty("--shade", shade.toFixed(3));
         }
-        for (let i = 0; i < N; i += 1) {
+        for (let i = 0; i < n; i += 1) {
           const strip = stripRef.current[i];
           if (!strip) continue;
           strip.style.setProperty("--lit", lit[i].toFixed(3));
@@ -74,11 +86,11 @@ export const TurnLeaf = forwardRef<
         shadowRef.current?.style.setProperty("--sh", (shade * 0.5).toFixed(3));
       },
     }),
-    [],
+    [n],
   );
 
   let tree: ReactNode = null;
-  for (let i = N - 1; i >= 0; i -= 1) {
+  for (let i = n - 1; i >= 0; i -= 1) {
     const inner = tree;
     tree = (
       <div
@@ -134,7 +146,7 @@ export const TurnLeaf = forwardRef<
         className={`${styles.curl} ${
           dir === "next" ? styles.curlNext : styles.curlPrev
         }`}
-        style={{ "--n": N } as CSSProperties}
+        style={{ "--n": n } as CSSProperties}
         aria-hidden
       >
         {tree}
