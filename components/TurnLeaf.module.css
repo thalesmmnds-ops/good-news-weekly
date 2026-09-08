@@ -46,23 +46,26 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: calc(var(--page-w, 0px) * 0.09);
+  width: calc(var(--page-w, 0px) * 0.11);
   pointer-events: none;
+  /* feather the edge at the gutter so it reads as a soft shadow, not a
+     hard-edged bar, from the first frame of the turn */
+  filter: blur(5px);
 }
 .curlNext .spine {
-  left: 0;
+  left: calc(var(--page-w, 0px) * -0.02);
   background: linear-gradient(
     90deg,
-    rgba(40, 28, 10, 0.42) 0%,
-    rgba(40, 28, 10, 0) 92%
+    rgba(40, 28, 10, 0.34) 24%,
+    rgba(40, 28, 10, 0) 94%
   );
 }
 .curlPrev .spine {
-  right: 0;
+  right: calc(var(--page-w, 0px) * -0.02);
   background: linear-gradient(
     270deg,
-    rgba(40, 28, 10, 0.42) 0%,
-    rgba(40, 28, 10, 0) 92%
+    rgba(40, 28, 10, 0.34) 24%,
+    rgba(40, 28, 10, 0) 94%
   );
 }
 
