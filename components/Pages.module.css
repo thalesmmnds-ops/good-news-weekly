@@ -22,7 +22,7 @@
 .rank {
   font-family: var(--display);
   font-weight: 600;
-  font-size: calc(var(--page-w) * 0.128); /* 64px at the 500px design width */
+  font-size: calc(var(--page-w) * 0.112); /* 56px at the 500px design width */
   line-height: 0.78;
   letter-spacing: -0.03em;
   color: var(--ink);
@@ -33,7 +33,7 @@
 }
 /* beats the shared .caps font-size */
 .kicker.caps {
-  font-size: max(10px, calc(var(--page-w) * 0.024)); /* 12px @ 500 */
+  font-size: max(13px, calc(var(--page-w) * 0.032)); /* 16px @ 500 */
 }
 
 .headline {
