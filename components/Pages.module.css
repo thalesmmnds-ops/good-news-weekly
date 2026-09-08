@@ -22,7 +22,7 @@
 .rank {
   font-family: var(--display);
   font-weight: 600;
-  font-size: calc(var(--page-w) * 0.135);
+  font-size: calc(var(--page-w) * 0.128); /* 64px at the 500px design width */
   line-height: 0.78;
   letter-spacing: -0.03em;
   color: var(--ink);
@@ -31,11 +31,15 @@
 .kicker {
   margin-top: 0.4em;
 }
+/* beats the shared .caps font-size */
+.kicker.caps {
+  font-size: max(10px, calc(var(--page-w) * 0.024)); /* 12px @ 500 */
+}
 
 .headline {
   font-family: var(--display);
   font-weight: 500;
-  font-size: max(17px, calc(var(--page-w) * 0.053));
+  font-size: max(16px, calc(var(--page-w) * 0.048)); /* 24px @ 500 */
   line-height: 1.14;
   letter-spacing: -0.006em;
   margin: 0.4em 0 0;
@@ -45,7 +49,7 @@
 .dek {
   font-family: var(--display);
   font-style: italic;
-  font-size: max(13px, calc(var(--page-w) * 0.038));
+  font-size: max(13px, calc(var(--page-w) * 0.032)); /* 16px @ 500 */
   line-height: 1.38;
   color: var(--ink-soft);
   margin: 0.72em 0 0;
@@ -68,7 +72,7 @@
 }
 .plateCap {
   margin-top: 0.4em;
-  font-size: max(9px, calc(var(--page-w) * 0.0245));
+  font-size: max(9px, calc(var(--page-w) * 0.024)); /* 12px @ 500 */
   line-height: 1.38;
   font-style: italic;
   color: var(--ink-faint);
@@ -77,7 +81,7 @@
   font-style: normal;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.88em;
+  font-size: 0.667em; /* 8px against the 12px caption */
 }
 
 .body {
@@ -85,7 +89,7 @@
   min-height: 0;
   overflow: hidden;
   margin: 0.7em 0 0;
-  font-size: max(12.5px, calc(var(--page-w) * 0.0345));
+  font-size: max(12px, calc(var(--page-w) * 0.032)); /* 16px @ 500 */
   line-height: 1.54;
 }
 
@@ -112,7 +116,7 @@
   margin-top: calc(var(--page-w) * 0.05);
   padding-top: 0.85em;
   border-top: 1px solid var(--hairline);
-  font-size: max(11px, calc(var(--page-w) * 0.03));
+  font-size: max(10px, calc(var(--page-w) * 0.024)); /* 12px @ 500 */
   color: var(--ink-faint);
 }
 .sourceLink {
