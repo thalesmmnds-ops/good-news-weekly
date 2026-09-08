@@ -8,24 +8,22 @@
     {
       "rank": 1,
       "category": "science",
-      "headline": "London's clean-air zone is showing up in children's lungs",
-      "dek": "After the Ultra Low Emission Zone took effect, the lung growth of London schoolchildren caught up with peers in a less-polluted town.",
-      "summary": "The CHILL study tracked the lungs of more than 3,400 children aged six to nine across London and Luton from 2018 to 2022, testing them each year. London's children began with measurably smaller lungs, but after the Ultra Low Emission Zone took effect and roadside nitrogen dioxide fell, their lung growth sped up until it matched the Luton group. The results appeared in The Lancet Public Health.",
-      "whyItMatters": "It is rare, hard evidence that a single traffic policy can change how children's bodies develop.",
+      "headline": "An 18-year-old's garage water filter pulls microplastics out with magnetic oil",
+      "dek": "Mia Heller's membrane-free device mixes contaminated water with a ferrofluid, then lifts the plastic away with a magnet.",
+      "summary": "Mia Heller, a senior at Kettle Run High School in Warrenton, Virginia, built a flour-bag-sized water filter with no membranes. It stirs contaminated water into a magnetic oil that hydrophobic microplastics cling to, then a magnetic field draws the oil and trapped plastic out, leaving cleaner water and recycling the oil for the next pass. In her tests it removed about 95 percent of microplastics by weight, and it was a finalist at the 2025 Regeneron International Science and Engineering Fair.",
+      "whyItMatters": "Membrane filters clog and have to be replaced; a reusable magnetic method could be cheaper to run at small scale.",
       "image": {
-        "src": "/plates/ulez-sign.jpg",
-        "alt": "A road sign marking the boundary of London's Ultra Low Emission Zone.",
-        "caption": "A boundary sign for London's Ultra Low Emission Zone.",
-        "credit": "Matt Brown",
-        "creditUrl": "https://commons.wikimedia.org/wiki/File:ULEZ_Zone_signs.jpg",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+        "src": "/plates/glass-of-water.jpg",
+        "alt": "A clear glass of water on a plain surface.",
+        "caption": "Clean water — what the filter is meant to leave behind.",
+        "credit": "Derek Jensen",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:Glass-of-water.jpg",
+        "license": "Public domain"
       },
       "source": {
-        "name": "Queen Mary University of London",
-        "url": "https://www.qmul.ac.uk/news/latest-news/2026/queen-mary-news/pr/introduction-of-londons-ultra-low-emission-zone-linked-to-improved-lung-growth-in-children--.html",
-        "date": "2026-08-19",
-        "via": "Positive News"
+        "name": "ScienceBlog",
+        "url": "https://scienceblog.com/j-in-a-warrenton-virginia-garage-an-18-year-old-kettle-run-high-school-student-named-mia-heller-built-a-membrane-free-water-filter-the-size-of-a-bag-of-flour-three-modules-one-litre-a-pass-and-her-tur/",
+        "date": "2026-09-05"
       }
     },
     {
