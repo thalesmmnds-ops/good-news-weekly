@@ -26,10 +26,13 @@
   line-height: 0.78;
   letter-spacing: -0.03em;
   color: var(--ink);
+  /* explicit gap to the kicker — set here, not on the kicker, because the
+     rank's tight line-height makes an em-margin on the kicker unpredictable */
+  margin-bottom: 8px;
 }
 
 .kicker {
-  margin-top: 0.4em;
+  margin-top: 0;
 }
 /* beats the shared .caps font-size */
 .kicker.caps {
