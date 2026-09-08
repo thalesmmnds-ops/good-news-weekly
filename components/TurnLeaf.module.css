@@ -46,26 +46,30 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: calc(var(--page-w, 0px) * 0.11);
+  /* matches the reach of .page's own inset spine shadow (30px offset,
+     40px blur ≈ 0.14·page-w) so covering the static page's shadow with
+     the curl doesn't lose the right half of the gutter valley */
+  width: calc(var(--page-w, 0px) * 0.14);
   pointer-events: none;
-  /* feather the edge at the gutter so it reads as a soft shadow, not a
-     hard-edged bar, from the first frame of the turn */
-  filter: blur(5px);
 }
 .curlNext .spine {
-  left: calc(var(--page-w, 0px) * -0.02);
+  left: 0;
   background: linear-gradient(
     90deg,
-    rgba(40, 28, 10, 0.34) 24%,
-    rgba(40, 28, 10, 0) 94%
+    rgba(40, 28, 10, 0.5) 0%,
+    rgba(40, 28, 10, 0.28) 22%,
+    rgba(40, 28, 10, 0.08) 55%,
+    rgba(40, 28, 10, 0) 100%
   );
 }
 .curlPrev .spine {
-  right: calc(var(--page-w, 0px) * -0.02);
+  right: 0;
   background: linear-gradient(
     270deg,
-    rgba(40, 28, 10, 0.34) 24%,
-    rgba(40, 28, 10, 0) 94%
+    rgba(40, 28, 10, 0.5) 0%,
+    rgba(40, 28, 10, 0.28) 22%,
+    rgba(40, 28, 10, 0.08) 55%,
+    rgba(40, 28, 10, 0) 100%
   );
 }
 
