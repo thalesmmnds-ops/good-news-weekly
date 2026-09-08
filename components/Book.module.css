@@ -248,10 +248,17 @@
 
 @media (max-width: 720px) {
   .wrap {
-    padding: 12px clamp(44px, 12vw, 60px);
+    /* tight enough that the full spread fits without flexbox shrinking
+       .scene — the turning leaf uses the raw --page-w and can't shrink
+       with it, so a shrunk .scene makes the flipped page render larger
+       than the one it lands on */
+    padding: 12px 8px;
   }
   .scene {
-    --page-w: min(47vw, calc((100dvh - 70px) / 1.42 / 1.4));
+    /* 2·47vw = 94vw always clears the 100vw − 16px wrap, so .scene never
+       gets flex-shrunk */
+    --page-w: min(47vw, calc((100dvh - 60px) / 1.42 / 1.4));
+    flex-shrink: 0;
   }
   .book {
     transform: rotateX(5deg);

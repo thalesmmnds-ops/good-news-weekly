@@ -309,7 +309,16 @@ export function Book({
       if (!turnRef.current) setTurn({ dir: d, s: spread });
       window.setTimeout(() => turnApi.current?.apply(p), 60);
     };
-  }, [setTurn, spread]);
+    // dev aid: land a turn as if the spring had settled, for measuring the
+    // post-turn state without a running rAF clock
+    (window as unknown as { __gnwStep?: (d: Dir) => void }).__gnwStep = (d) => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+      busyRef.current = false;
+      setTurn(null);
+      settle(d === "next" ? spread + 1 : spread - 1);
+    };
+  }, [setTurn, settle, spread]);
 
   const s = turn ? turn.s : spread;
   const atStart = spread <= 0;
