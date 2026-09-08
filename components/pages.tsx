@@ -1,8 +1,6 @@
-import Link from "next/link";
-
 import type { Issue, Story } from "@/lib/schema";
 import { CATEGORY_LABELS } from "@/lib/schema";
-import { formatLongDate, formatWeekOf, toRoman } from "@/lib/dates";
+import { formatLongDate, formatWeekOf } from "@/lib/dates";
 
 import styles from "./Pages.module.css";
 
@@ -101,7 +99,7 @@ export function CoverPage({ issue, side }: { issue: Issue; side: Side }) {
       </h1>
       <hr className={styles.coverRule} />
       <p className={`${styles.coverMeta} ${styles.caps}`}>
-        Vol.&nbsp;{toRoman(issue.volume)} &nbsp;&middot;&nbsp; No.&nbsp;{issue.number}{" "}
+        Vol.&nbsp;{String(issue.volume).padStart(2, "0")} &nbsp;&middot;&nbsp; No.&nbsp;{issue.number}{" "}
         &nbsp;&middot;&nbsp; {formatWeekOf(issue.weekOf)}
       </p>
       <p className={styles.coverTagline}>
@@ -116,34 +114,8 @@ export function CoverPage({ issue, side }: { issue: Issue; side: Side }) {
   );
 }
 
-export function ColophonPage({ issue, side }: { issue: Issue; side: Side }) {
-  return (
-    <div className={`${styles.inner} ${sideClass(side)}`}>
-      <h2 className={styles.colTitle}>How this Edition is made</h2>
-      <p className={styles.pledge}>
-        &ldquo;No politics. No fear. Just the week&rsquo;s genuine progress.&rdquo;
-      </p>
-      <div className={styles.colBody}>
-        <p>
-          Every Sunday a program reads the week&rsquo;s science, medicine, and
-          conservation reporting from a fixed set of sources, sets aside anything
-          about politics, conflict, crime, or disaster, and drafts the strongest
-          candidates. An editor picks the final ten, checks each against its
-          primary source, and rewrites every summary in plain words.
-        </p>
-        <p>
-          Summaries are original and brief. Each page links out to the
-          publication that did the reporting.
-        </p>
-        <p>
-          <Link href="/archive/">Past issues</Link> &nbsp;·&nbsp;{" "}
-          <Link href="/about/">About</Link> &nbsp;·&nbsp;{" "}
-          <a href="/feed.xml">RSS</a>
-        </p>
-      </div>
-      <div className={`${styles.foot} ${styles.caps}`}>
-        No.&nbsp;{issue.number} &nbsp;·&nbsp; {formatLongDate(issue.published)}
-      </div>
-    </div>
-  );
+export function ColophonPage({ side }: { issue: Issue; side: Side }) {
+  // left blank for now — a plain white leaf; the "how it's made" note
+  // will come back here later
+  return <div className={`${styles.inner} ${sideClass(side)} ${styles.blank}`} />;
 }

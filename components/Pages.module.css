@@ -228,6 +228,11 @@
   font-weight: 500;
 }
 
+/* a deliberately blank leaf — plain white, no content */
+.blank {
+  background: #fff;
+}
+
 /* ── phones: story type ~25% smaller, so more of each article shows and
       the source link + folio clear the page ────────────────────────────── */
 @media (max-width: 720px) {

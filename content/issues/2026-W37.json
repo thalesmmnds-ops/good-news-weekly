@@ -12,6 +12,15 @@
       "dek": "After the Ultra Low Emission Zone took effect, the lung growth of London schoolchildren caught up with peers in a less-polluted town.",
       "summary": "The CHILL study tracked the lungs of more than 3,400 children aged six to nine across London and Luton from 2018 to 2022, testing them each year. London's children began with measurably smaller lungs, but after the Ultra Low Emission Zone took effect and roadside nitrogen dioxide fell, their lung growth sped up until it matched the Luton group. The results appeared in The Lancet Public Health.",
       "whyItMatters": "It is rare, hard evidence that a single traffic policy can change how children's bodies develop.",
+      "image": {
+        "src": "/plates/ulez-sign.jpg",
+        "alt": "A road sign marking the boundary of London's Ultra Low Emission Zone.",
+        "caption": "A boundary sign for London's Ultra Low Emission Zone.",
+        "credit": "Matt Brown",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:ULEZ_Zone_signs.jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+      },
       "source": {
         "name": "Queen Mary University of London",
         "url": "https://www.qmul.ac.uk/news/latest-news/2026/queen-mary-news/pr/introduction-of-londons-ultra-low-emission-zone-linked-to-improved-lung-growth-in-children--.html",
@@ -52,6 +61,15 @@
       "dek": "A KAUST team dosed wild Acropora with beneficial bacteria during a 2022 heatwave and tracked its recovery.",
       "summary": "Researchers at KAUST in Saudi Arabia took helpful bacteria from healthy Red Sea corals and applied them, live and as an inactivated “postbiotic”, to heat-stressed Acropora colonies in the central Red Sea during a 2022 marine heatwave. After 15 days, corals given the best formulas held more of their colour and photosynthetic activity than untreated ones. The work was published in Cell Reports.",
       "whyItMatters": "A postbiotic that survives storage could be applied to reefs at scale, unlike fragile live cultures.",
+      "image": {
+        "src": "/plates/red-sea-coral.jpg",
+        "alt": "Branching hard coral growing on a reef in the Red Sea off Egypt.",
+        "caption": "Coral on Fanous East Reef in the Red Sea, Egypt.",
+        "credit": "Derek Keats",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:Coral_at_Fanous_East_Reef,_Red_Sea,_Egypt_-SCUBA_-UNDERWATER_-PICTURES_(6536736609).jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+      },
       "source": {
         "name": "Good News Network",
         "url": "https://www.goodnewsnetwork.org/red-sea-coral-dying-from-heat-stress-is-being-revived-using-probiotics/",
@@ -65,6 +83,14 @@
       "dek": "Karl Wenner turned flood-prone cropland near Klamath Falls into managed wetland that now shelters endangered fish and about 140 bird species.",
       "summary": "Karl Wenner, co-owner of Lakeside Farms in Oregon's Klamath Basin, turned roughly 70 acres of his 400-acre barley farm into managed wetland in 2021, after finding the water he pumped off the land was carrying far too much phosphorus into a nearby lake. The wetland now draws about 140 bird species and tens of thousands of waterfowl, and has been used to rear the federally endangered Lost River and shortnose sucker.",
       "whyItMatters": "The Klamath Basin's water is fought over hard, and this shows farmland can be handed back to wildlife without a court order.",
+      "image": {
+        "src": "/plates/klamath-wetland.jpg",
+        "alt": "Open water and reed beds at Klamath National Wildlife Refuge, with hills on the horizon.",
+        "caption": "Wetland at the Klamath National Wildlife Refuge.",
+        "credit": "Ron Cole, U.S. Fish and Wildlife Service",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:Klamath_national_wildlife_refuge_wetlands.jpg",
+        "license": "Public domain"
+      },
       "source": {
         "name": "Jefferson Public Radio",
         "url": "https://www.ijpr.org/environment-energy-and-transportation/2022-05-11/endangered-fish-and-waterfowl-find-refuge-at-the-klamath-basins-lakeside-farms",
@@ -93,6 +119,14 @@
       "dek": "Arya Satheesh's material releases enzymes while decomposing, targeting fragments of PET plastic.",
       "summary": "Arya Satheesh, a secondary-school student in Letterkenny, Ireland, made Eco Purge: a biodegradable plastic that releases plastic-digesting enzymes as it breaks down, targeting microplastics from PET. She sourced the enzymes with help from a researcher at Ireland's national bioeconomy centre and took the European title at the 2026 Earth Prize. For now it works best in controlled settings such as compost facilities.",
       "whyItMatters": "Under a tenth of plastic is recycled, so a material that helps clear the fragments left behind is a different angle on the problem.",
+      "image": {
+        "src": "/plates/microplastics.jpg",
+        "alt": "A close-up of many small, irregular plastic fragments in mixed colours.",
+        "caption": "Microplastics — the small pieces left as larger plastic breaks down.",
+        "credit": "NOAA Marine Debris Program",
+        "creditUrl": "https://commons.wikimedia.org/wiki/File:Microplastics_(7656713582).jpg",
+        "license": "Public domain"
+      },
       "source": {
         "name": "Goodnet",
         "url": "https://www.goodnet.org/people/high-schooler-invents-a-plastic-that-eats-microplastics/",
