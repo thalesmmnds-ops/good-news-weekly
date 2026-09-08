@@ -322,7 +322,6 @@ export function Book({
           <div className={styles.castShadow} aria-hidden />
           <div className={`${styles.fore} ${styles.foreLeft}`} aria-hidden />
           <div className={`${styles.fore} ${styles.foreRight}`} aria-hidden />
-          <div className={styles.deckle} aria-hidden />
 
           <div className={styles.spread}>
             <div className={`${styles.page} ${styles.left} grain`}>{left?.node}</div>
